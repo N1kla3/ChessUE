@@ -3,3 +3,8 @@
 
 #include "ChessUEGameModeBase.h"
 
+AChessUEGameModeBase::AChessUEGameModeBase()
+{
+	DefaultPawnClass = AGamePawn::StaticClass();
+	PlayerControllerClass = AMyPlayerController::StaticClass();
+}

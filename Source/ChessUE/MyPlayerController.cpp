@@ -3,3 +3,10 @@
 
 #include "MyPlayerController.h"
 
+AMyPlayerController::AMyPlayerController()
+{
+	bEnableClickEvents = true;
+	bEnableTouchEvents = true;
+	bShowMouseCursor = true;
+	DefaultMouseCursor = EMouseCursor::GrabHand;
+}

@@ -14,5 +14,6 @@ class CHESSUE_API AChessUEGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 
+public:	
 	AChessUEGameModeBase();
 };

@@ -12,14 +12,16 @@ class CHESSUE_API AGamePawn : public APawn
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	AGamePawn();
+	// Sets default values for this pawn's properties
+	AGamePawn(const FObjectInitializer& Initialize);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	virtual void CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult) override;
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 

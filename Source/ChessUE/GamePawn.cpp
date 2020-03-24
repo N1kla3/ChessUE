@@ -4,11 +4,10 @@
 #include "GamePawn.h"
 
 // Sets default values
-AGamePawn::AGamePawn()
+AGamePawn::AGamePawn(const FObjectInitializer& Initialize)
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	Super(Initialize);
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 // Called when the game starts or when spawned
@@ -17,6 +16,12 @@ void AGamePawn::BeginPlay()
 	Super::BeginPlay();
 	
 }
+
+void AGamePawn::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
+{
+	
+}
+
 
 // Called every frame
 void AGamePawn::Tick(float DeltaTime)

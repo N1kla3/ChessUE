@@ -2,20 +2,15 @@
 
 
 #include "GamePawn.h"
+#include "GameFramework/PlayerController.h"
 
 // Sets default values
-AGamePawn::AGamePawn(const FObjectInitializer& Initialize)
+AGamePawn::AGamePawn(const FObjectInitializer& GamePawnInitialize) :
+	Super(GamePawnInitialize)
 {
-	Super(Initialize);
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
-// Called when the game starts or when spawned
-void AGamePawn::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
 
 void AGamePawn::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
 {
@@ -34,6 +29,17 @@ void AGamePawn::Tick(float DeltaTime)
 void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAction("ClickChessPiece", EInputEvent::IE_Pressed, this, &AGamePawn::ClickChessPiece);
+	PlayerInputComponent->BindAction("MoveChessPiece", EInputEvent::IE_Pressed, this, &AGamePawn::MoveChessPiece);
+}
 
+void AGamePawn::ClickChessPiece()
+{
+	
+}
+
+void AGamePawn::MoveChessPiece()
+{
+	
 }
 

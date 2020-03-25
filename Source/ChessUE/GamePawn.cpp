@@ -2,6 +2,7 @@
 
 
 #include "GamePawn.h"
+#include "Engine/Engine.h"
 #include "GameFramework/PlayerController.h"
 
 
@@ -13,7 +14,7 @@ AGamePawn::AGamePawn()
 
 	PCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
 	PCamera->SetupAttachment(RootComponent);
-	AutoReceiveInput = EAutoReceiveInput::Player0;
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 
@@ -40,11 +41,12 @@ void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AGamePawn::ClickChessPiece()
 {
-	
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
 }
 
 void AGamePawn::MoveChessPiece(float a)
 {
-	
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("fff"));
 }
 

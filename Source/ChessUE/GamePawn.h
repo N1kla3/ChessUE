@@ -19,10 +19,10 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class UCameraComponent* PCamera;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere)
 	class USceneComponent* PScene;
 public:
 	// Called every frame

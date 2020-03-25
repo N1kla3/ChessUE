@@ -4,17 +4,22 @@
 #include "GamePawn.h"
 #include "GameFramework/PlayerController.h"
 
+
 // Sets default values
-AGamePawn::AGamePawn(const FObjectInitializer& GamePawnInitialize) :
-	Super(GamePawnInitialize)
-{
-	AutoPossessPlayer = EAutoReceiveInput::Player0;
+AGamePawn::AGamePawn()
+{	
+	PScene = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
+	RootComponent = PScene;
+
+	PCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
+	PCamera->SetupAttachment(RootComponent);
+	AutoReceiveInput = EAutoReceiveInput::Player0;
 }
 
 
-void AGamePawn::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
+void AGamePawn::BeginPlay()
 {
-	
+	Super::BeginPlay();
 }
 
 
@@ -22,7 +27,7 @@ void AGamePawn::CalcCamera(float DeltaTime, FMinimalViewInfo& OutResult)
 void AGamePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	
 }
 
 // Called to bind functionality to input
@@ -30,7 +35,7 @@ void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction("ClickChessPiece", EInputEvent::IE_Pressed, this, &AGamePawn::ClickChessPiece);
-	PlayerInputComponent->BindAction("MoveChessPiece", EInputEvent::IE_Pressed, this, &AGamePawn::MoveChessPiece);
+	PlayerInputComponent->BindAxis("MoveChessPiece", this, &AGamePawn::MoveChessPiece);
 }
 
 void AGamePawn::ClickChessPiece()
@@ -38,7 +43,7 @@ void AGamePawn::ClickChessPiece()
 	
 }
 
-void AGamePawn::MoveChessPiece()
+void AGamePawn::MoveChessPiece(float a)
 {
 	
 }

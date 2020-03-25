@@ -10,10 +10,19 @@ UCLASS(Abstract)
 class CHESSUE_API AChessPiece : public AActor
 {
 	GENERATED_BODY()
-private:
+protected:
+	UPROPERTY()
 	int32 XBoardCoord;
+
+	UPROPERTY()
 	int32 YBoardCoord;
+
+	UPROPERTY()
+	USceneComponent* figScene;
+	
+	UPROPERTY()
 	UStaticMeshComponent* Figure;
+	
 public:	
 	// Sets default values for this actor's properties
 	AChessPiece();

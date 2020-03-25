@@ -41,12 +41,13 @@ void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AGamePawn::ClickChessPiece()
 {
-
+	//debug
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
 }
 
 void AGamePawn::MoveChessPiece(float a)
 {
+	//debug
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("fff"));
 }
 

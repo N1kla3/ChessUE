@@ -2,14 +2,31 @@
 
 
 #include "ChessPiece.h"
+#include "Components/StaticMeshComponent.h"
+#include "UObject/ConstructorHelpers.h"
 
 // Sets default values
 AChessPiece::AChessPiece()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	
 
+	struct FConstructorStatics
+	{
+		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> figure;
+		FConstructorStatics()
+			: figure(TEXT("/Game/Shape_Cone.Shape_cone"))
+		{
+		}	
+	};
+
+	static FConstructorStatics ChessConstructor;
+	
+	figScene = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
+	RootComponent = figScene;
+
+	Figure = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("figure"));
+	Figure->SetStaticMesh(ChessConstructor.figure.Get());
 }
 
 AChessPiece::AChessPiece(int32 X, int32 Y):XBoardCoord(X), YBoardCoord(Y)

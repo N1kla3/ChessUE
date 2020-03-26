@@ -8,30 +8,27 @@
 // Sets default values
 AChessPiece::AChessPiece()
 {
+	
+}
+
+AChessPiece::AChessPiece(int32 X, int32 Y)
+	: XBoardCoord(X)
+	, YBoardCoord(Y)
+{
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	struct FConstructorStatics
-	{
-		ConstructorHelpers::FObjectFinderOptional<UStaticMesh> figure;
-		FConstructorStatics()
-			: figure(TEXT("/Game/Shape_Cone.Shape_cone"))
-		{
-		}	
-	};
-
-	static FConstructorStatics ChessConstructor;
+	const TCHAR* PathToModel = L"/Game/Shape_Cone.Shape_cone";
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> VisualAsset(PathToModel);
 	
-	figScene = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
-	RootComponent = figScene;
+	FigScene = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
+	RootComponent = FigScene;
 
 	Figure = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("figure"));
-	Figure->SetStaticMesh(ChessConstructor.figure.Get());
-}
-
-AChessPiece::AChessPiece(int32 X, int32 Y):XBoardCoord(X), YBoardCoord(Y)
-{
-	PrimaryActorTick.bCanEverTick = true;
+    if (VisualAsset.Succeeded())
+    {
+		Figure->SetStaticMesh(VisualAsset.Object);
+    }
 	
 }
 
@@ -39,6 +36,21 @@ AChessPiece::AChessPiece(int32 X, int32 Y):XBoardCoord(X), YBoardCoord(Y)
 void AChessPiece::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
+
+FBoardLocation AChessPiece::GetMoveLocation()
+{
+	return FBoardLocation();
+}
+
+FBoardLocation AChessPiece::GetBoardLocation()
+{
+	return FBoardLocation();
+}
+
+void AChessPiece::SetBoardLocation(FBoardLocation Location)
+{
 	
 }
 

@@ -1,15 +1,23 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ChessPiece.generated.h"
 
+typedef TPair<int32, int32> FBoardLocation;
+
 UCLASS(Abstract)
 class CHESSUE_API AChessPiece : public AActor
-{
-	GENERATED_BODY()
+{	GENERATED_BODY()
+
+public:
+	AChessPiece();
+	
+	AChessPiece(int32 X, int32 Y);
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 protected:
 	UPROPERTY()
 	int32 XBoardCoord;
@@ -18,22 +26,21 @@ protected:
 	int32 YBoardCoord;
 
 	UPROPERTY()
-	USceneComponent* figScene;
+	USceneComponent* FigScene;
 	
 	UPROPERTY()
 	UStaticMeshComponent* Figure;
 	
-public:	
-	// Sets default values for this actor's properties
-	AChessPiece();
-	AChessPiece(int32 X, int32 Y);
 
+public:
+	virtual FBoardLocation GetMoveLocation();
+
+	FBoardLocation GetBoardLocation();
+
+	void SetBoardLocation(FBoardLocation);
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
+	
 };

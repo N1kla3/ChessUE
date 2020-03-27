@@ -6,7 +6,6 @@
 #include "GameFramework/PlayerController.h"
 
 
-// Sets default values
 AGamePawn::AGamePawn()
 {	
 	PScene = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
@@ -24,14 +23,21 @@ void AGamePawn::BeginPlay()
 }
 
 
-// Called every frame
 void AGamePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (PC)
+	{
+		FVector Start, Dir;
+		PC->DeprojectMousePositionToWorld(Start, Dir);
+		FVector End = Start + (Dir * 8000.0f);
+		TraceForChessPiece(Start, End);
+	}
 }
 
-// Called to bind functionality to input
+
 void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -49,5 +55,28 @@ void AGamePawn::MoveChessPiece(float a)
 {
 	//debug
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("fff"));
+}
+
+void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
+{
+	FHitResult FigureHit;
+	GetWorld()->LineTraceSingleByChannel(FigureHit, Start, End, ECC_Visibility);
+
+	if(FigureHit.Actor.IsValid())
+	{
+		AChessPiece* HitPiece = Cast<AChessPiece>(FigureHit.Actor.Get());
+
+		if(CurrentChessPieceFocus != HitPiece)
+		{
+			CurrentChessPieceFocus = HitPiece;
+			//debug
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new"));
+		}
+		else if (CurrentChessPieceFocus)
+		{
+			//debug
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("oldddd"));
+		}
+	}
 }
 

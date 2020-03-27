@@ -1,8 +1,8 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
+#include "ChessPiece.h"
 #include "GameFramework/Pawn.h"
 #include "GamePawn.generated.h"
 
@@ -24,6 +24,10 @@ protected:
 
 	UPROPERTY(EditAnywhere)
 	class USceneComponent* PScene;
+
+	UPROPERTY()
+	AChessPiece* CurrentChessPieceFocus;
+	
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -33,4 +37,6 @@ public:
 	void ClickChessPiece();
 
 	void MoveChessPiece(float a);
+
+	void TraceForChessPiece(const FVector& Start, const FVector& End);
 };

@@ -7,7 +7,8 @@
 
 
 AGamePawn::AGamePawn()
-{	
+{
+	bIsCLicked = false;
 	PScene = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = PScene;
 
@@ -27,14 +28,11 @@ void AGamePawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	
-	APlayerController* PC = Cast<APlayerController>(GetController());
-	if (PC)
+	if(CurrentChessPieceFocus)
 	{
-		FVector Start, Dir;
-		PC->DeprojectMousePositionToWorld(Start, Dir);
-		FVector End = Start + (Dir * 8000.0f);
-		TraceForChessPiece(Start, End);
+		CurrentChessPieceFocus->Highlight();
 	}
+	
 }
 
 
@@ -47,14 +45,32 @@ void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AGamePawn::ClickChessPiece()
 {
-	//debug
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
+	APlayerController* PC = Cast<APlayerController>(GetController());
+	if (PC)
+	{
+		if (CurrentChessPieceFocus) 
+		{
+			//some move code
+			CurrentChessPieceFocus = nullptr;
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
+		}
+		else
+		{
+			FVector Start, Dir;
+			PC->DeprojectMousePositionToWorld(Start, Dir);
+			FVector End = Start + (Dir * 8000.0f);
+			TraceForChessPiece(Start, End);
+		}
+	}	
 }
 
 void AGamePawn::MoveChessPiece(float a)
 {
-	//debug
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("fff"));
+	
+	if (CurrentChessPieceFocus != NULL)
+	{	//debug
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("fff"));
+	}
 }
 
 void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
@@ -68,9 +84,10 @@ void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 
 		if(CurrentChessPieceFocus != HitPiece)
 		{
+		
 			CurrentChessPieceFocus = HitPiece;
-			//debug
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new"));
+			
 		}
 		else if (CurrentChessPieceFocus)
 		{

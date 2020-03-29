@@ -19,6 +19,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+	bool bIsCLicked;
+	
 	UPROPERTY(EditAnywhere)
 	class UCameraComponent* PCamera;
 

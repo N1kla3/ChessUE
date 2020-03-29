@@ -31,6 +31,11 @@ FBoardLocation AChessPiece::GetMoveLocation()
 	return FBoardLocation(XBoardCoord, YBoardCoord);
 }
 
+void AChessPiece::Highlight()
+{	
+	this->SetActorRelativeLocation(FVector(20.0f, 0.0f, 0.0f));
+}
+
 FBoardLocation AChessPiece::GetBoardLocation()
 {
 	return FBoardLocation(XBoardCoord, YBoardCoord);

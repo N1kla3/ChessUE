@@ -35,6 +35,8 @@ protected:
 public:
 	virtual FBoardLocation GetMoveLocation();
 
+	void Highlight();
+
 	FBoardLocation GetBoardLocation();
 
 	void SetBoardLocation(FBoardLocation);

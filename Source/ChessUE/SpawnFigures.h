@@ -11,16 +11,26 @@ class CHESSUE_API ASpawnBoard : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+
+	UPROPERTY()
+	float Xspace;
+
+	UPROPERTY()
+	float Yspace;
+
+	UPROPERTY()
+	USceneComponent* URoot;
+	
 	// Sets default values for this actor's properties
 	ASpawnBoard();
+
+public:	
+	virtual void Tick(float DeltaTime) override;
+	// Called every frame
+	void SpawnFigures();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 };

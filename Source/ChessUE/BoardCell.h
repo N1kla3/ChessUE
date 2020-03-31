@@ -12,15 +12,33 @@ class CHESSUE_API ABoardCell : public AActor
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
+	
+	UPROPERTY()
+	int32 Xcoord;
+
+	UPROPERTY()
+	int32 Ycoord;
+
+
+	UPROPERTY()
+	USceneComponent* URoot;
+
+	UPROPERTY()
+	UStaticMeshComponent* UCellMesh;
+	
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	ABoardCell();
+
+	ABoardCell(int32 X, int32 Y);
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+private:
+	void InitMesh();
 
 };

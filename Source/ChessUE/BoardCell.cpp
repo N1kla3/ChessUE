@@ -2,20 +2,44 @@
 
 
 #include "BoardCell.h"
+#include "Components/StaticMeshComponent.h"
+#include "ConstructorHelpers.h"
 
 // Sets default values
 ABoardCell::ABoardCell()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	InitMesh();
 }
 
-// Called when the game starts or when spawned
+ABoardCell::ABoardCell(int32 X, int32 Y)
+	: Xcoord(X)
+	, Ycoord(Y)
+{
+	InitMesh();
+}
+
+
 void ABoardCell::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ABoardCell::InitMesh()
+{
+	const TCHAR* PathToModel = L"/Game/Shape_Cube.Shape_Cube";
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> VisualAsset(PathToModel);
+
+	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
+	RootComponent = URoot;
+
+	UCellMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("mesh"));
+	if (VisualAsset.Succeeded())
+	{
+		UCellMesh->SetStaticMesh(VisualAsset.Object);
+	}
+	UCellMesh->SetupAttachment(RootComponent);
 }
 
 // Called every frame

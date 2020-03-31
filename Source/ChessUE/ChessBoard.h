@@ -11,7 +11,17 @@ class CHESSUE_API AChessBoard : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+public:
+
+	UPROPERTY(EditAnywhere, Category="Proprties")
+	int32 ROWS;
+
+	UPROPERTY(EditAnywhere, Category="Proporties")
+	int32 COLUMNS;
+
+	UPROPERTY(EditAnywhere, Category="Proporties")
+	float Space;
+	
 	// Sets default values for this actor's properties
 	AChessBoard();
 
@@ -19,8 +29,11 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+private:
+	void SpawnCells();
 };

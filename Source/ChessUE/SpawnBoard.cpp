@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SpawnFigures.h"
+#include "SpawnBoard.h"
 #include "Engine/World.h"
 #include "Bishop.h"
 

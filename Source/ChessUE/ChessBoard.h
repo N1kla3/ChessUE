@@ -21,6 +21,9 @@ public:
 
 	UPROPERTY(EditAnywhere, Category="Proporties")
 	float Space;
+
+	UPROPERTY()
+	USceneComponent* URoot;
 	
 	// Sets default values for this actor's properties
 	AChessBoard();

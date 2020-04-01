@@ -14,6 +14,9 @@ AChessBoard::AChessBoard()
 	ROWS = 8;
 	COLUMNS = 8;
 	Space = 100.0;
+
+	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
+	RootComponent = URoot;
 }
 
 // Called when the game starts or when spawned

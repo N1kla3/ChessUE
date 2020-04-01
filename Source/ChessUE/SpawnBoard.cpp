@@ -11,15 +11,14 @@ ASpawnBoard::ASpawnBoard()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	/*URoot->CreateDefaultSubobject<USceneComponent>(TEXT("scene"));
-	RootComponent = URoot;*/
+	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("scene"));
+	RootComponent = URoot;
 	
 }
 
 void ASpawnBoard::SpawnFigures()
 {
 	//tesst
-	FVector vec1(100.f, 0.f, 0.f);
 	FVector vec2(300.f, 0.f, 0.f);
 	FVector vec3(500.f, 0.f, 0.f);
 	FRotator rot(0.f, 0.f, 0.f);

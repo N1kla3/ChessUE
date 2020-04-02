@@ -41,5 +41,9 @@ public:
 
 	void MoveChessPiece(float a);
 
+	void MoveToCeil(FVector cellLocation);
+
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
+
+	FVector TraceForCeil(const FVector& Start, const FVector& End);
 };

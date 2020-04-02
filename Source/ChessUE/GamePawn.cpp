@@ -2,6 +2,8 @@
 
 
 #include "GamePawn.h"
+
+#include "BoardCell.h"
 #include "Engine/Engine.h"
 #include "GameFramework/PlayerController.h"
 
@@ -48,17 +50,19 @@ void AGamePawn::ClickChessPiece()
 	APlayerController* PC = Cast<APlayerController>(GetController());
 	if (PC)
 	{
+		FVector Start, Dir;
+		PC->DeprojectMousePositionToWorld(Start, Dir);
+		FVector End = Start + (Dir * 8000.0f);
+		
 		if (CurrentChessPieceFocus) 
 		{
-			//some move code
+			FVector ceilLocation = TraceForCeil(Start, End);
+			MoveToCeil(ceilLocation);
 			CurrentChessPieceFocus = nullptr;
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("This is an on screen message!"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}
 		else
-		{
-			FVector Start, Dir;
-			PC->DeprojectMousePositionToWorld(Start, Dir);
-			FVector End = Start + (Dir * 8000.0f);
+		{	
 			TraceForChessPiece(Start, End);
 		}
 	}	
@@ -67,11 +71,14 @@ void AGamePawn::ClickChessPiece()
 void AGamePawn::MoveChessPiece(float a)
 {
 	
-	if (CurrentChessPieceFocus != NULL)
-	{	//debug
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("fff"));
-	}
+	//method for moving figures on release
 }
+
+void AGamePawn::MoveToCeil(FVector cellLocation)
+{
+	CurrentChessPieceFocus->SetActorLocation(cellLocation+FVector(0.f, 0.f, 100.f));
+}
+
 
 void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 {
@@ -89,11 +96,21 @@ void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new"));
 			
 		}
-		else if (CurrentChessPieceFocus)
-		{
-			//debug
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("oldddd"));
-		}
 	}
 }
 
+FVector AGamePawn::TraceForCeil(const FVector& Start, const FVector& End)
+{
+	FHitResult CeilHit;
+	GetWorld()->LineTraceSingleByChannel(CeilHit, Start, End, ECC_Visibility);
+
+	if(CeilHit.Actor.IsValid())
+	{
+		ABoardCell* hitBlock = Cast<ABoardCell>(CeilHit.Actor.Get());
+
+		CurrentChessPieceFocus->SetBoardLocation(hitBlock->GetBoardLocation());
+		return hitBlock->GetActorLocation();
+	}
+	
+	return FVector(-1.f, 0.f, 0.f);
+}

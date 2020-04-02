@@ -33,7 +33,7 @@ FBoardLocation AChessPiece::GetMoveLocation()
 
 void AChessPiece::Highlight()
 {	
-	this->SetActorRelativeLocation(FVector(20.0f, 0.0f, 0.0f));
+	
 }
 
 FBoardLocation AChessPiece::GetBoardLocation()

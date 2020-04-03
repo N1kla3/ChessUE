@@ -10,15 +10,6 @@ AChessPiece::AChessPiece()
 	
 }
 
-AChessPiece::AChessPiece(const int32 X, const int32 Y)
-	: XBoardCoord(X)
-	, YBoardCoord(Y)
-{
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	
-}
-
 // Called when the game starts or when spawned
 void AChessPiece::BeginPlay()
 {
@@ -26,9 +17,9 @@ void AChessPiece::BeginPlay()
 	
 }
 
-FBoardLocation AChessPiece::GetMoveLocation()
+bool AChessPiece::CanMoveToLocation(FBoardLocation cell)
 {
-	return FBoardLocation(XBoardCoord, YBoardCoord);
+	return true;
 }
 
 void AChessPiece::Highlight()

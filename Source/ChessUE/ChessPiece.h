@@ -14,8 +14,6 @@ class CHESSUE_API AChessPiece : public AActor
 public:
 	AChessPiece();
 	
-	AChessPiece(int32 X, int32 Y);
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 protected:
@@ -33,7 +31,7 @@ protected:
 	
 
 public:
-	virtual FBoardLocation GetMoveLocation();
+	virtual bool CanMoveToLocation(FBoardLocation cell);
 
 	void Highlight();
 

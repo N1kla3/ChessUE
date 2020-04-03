@@ -15,7 +15,9 @@ class CHESSUE_API ABishop : public AChessPiece
 	GENERATED_BODY()
 public:
 	ABishop();
-	ABishop(int32, int32);
 	
-	virtual FBoardLocation GetMoveLocation() override;
+	virtual bool CanMoveToLocation(FBoardLocation cell) override;
+
+private:
+	void Init();
 };

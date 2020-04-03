@@ -8,6 +8,16 @@
 ABishop::ABishop()
 	:AChessPiece()
 {
+	Init();
+}
+
+bool ABishop::CanMoveToLocation(FBoardLocation)
+{
+	return true;
+}
+
+void ABishop::Init()
+{
 	const TCHAR* PathToModel = L"/Game/Shape_Cone.Shape_Cone";
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> VisualAsset(PathToModel);
 
@@ -20,15 +30,4 @@ ABishop::ABishop()
 		Figure->SetStaticMesh(VisualAsset.Object);
 	}
 	Figure->SetupAttachment(RootComponent);
-}
-
-ABishop::ABishop(const int32 X, const int32 Y)
-	: AChessPiece(X, Y)
-{
-	ABishop();
-}
-
-FBoardLocation ABishop::GetMoveLocation()
-{
-	return FBoardLocation(XBoardCoord, YBoardCoord);
 }

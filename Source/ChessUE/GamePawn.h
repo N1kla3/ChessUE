@@ -1,5 +1,6 @@
 #pragma once
 
+#include "BoardCell.h"
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
 #include "ChessPiece.h"
@@ -8,8 +9,7 @@
 
 UCLASS()
 class CHESSUE_API AGamePawn : public APawn
-{
-	GENERATED_BODY()
+{	GENERATED_BODY()
 
 public:
 
@@ -30,6 +30,9 @@ protected:
 
 	UPROPERTY()
 	AChessPiece* CurrentChessPieceFocus;
+
+	UPROPERTY()
+	ABoardCell* CurrentCellFocus;
 	
 public:
 	// Called every frame
@@ -41,9 +44,9 @@ public:
 
 	void MoveChessPiece(float a);
 
-	void MoveToCeil(FVector cellLocation);
+	void MoveFigureToCeil();
 
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
 
-	FVector TraceForCeil(const FVector& Start, const FVector& End);
+	void TraceForCeil(const FVector& Start, const FVector& End);
 };

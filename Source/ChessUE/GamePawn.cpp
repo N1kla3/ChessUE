@@ -56,8 +56,8 @@ void AGamePawn::ClickChessPiece()
 		
 		if (CurrentChessPieceFocus) 
 		{
-			FVector ceilLocation = TraceForCeil(Start, End);
-			MoveToCeil(ceilLocation);
+			TraceForCeil(Start, End);
+			MoveFigureToCeil();
 			CurrentChessPieceFocus = nullptr;
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}
@@ -74,9 +74,11 @@ void AGamePawn::MoveChessPiece(float a)
 	//method for moving figures on release
 }
 
-void AGamePawn::MoveToCeil(FVector cellLocation)
+void AGamePawn::MoveFigureToCeil()
 {
-	CurrentChessPieceFocus->SetActorLocation(cellLocation+FVector(0.f, 0.f, 100.f));
+	FVector newLocation = CurrentCellFocus->GetActorLocation();
+	CurrentChessPieceFocus->SetActorLocation(newLocation+FVector(0.f, 0.f, 100.f));
+	CurrentChessPieceFocus->SetBoardLocation(CurrentCellFocus->GetBoardLocation());
 }
 
 
@@ -99,18 +101,13 @@ void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 	}
 }
 
-FVector AGamePawn::TraceForCeil(const FVector& Start, const FVector& End)
+void AGamePawn::TraceForCeil(const FVector& Start, const FVector& End)
 {
 	FHitResult CeilHit;
 	GetWorld()->LineTraceSingleByChannel(CeilHit, Start, End, ECC_Visibility);
 
 	if(CeilHit.Actor.IsValid())
 	{
-		ABoardCell* hitBlock = Cast<ABoardCell>(CeilHit.Actor.Get());
-
-		CurrentChessPieceFocus->SetBoardLocation(hitBlock->GetBoardLocation());
-		return hitBlock->GetActorLocation();
+		CurrentCellFocus = Cast<ABoardCell>(CeilHit.Actor.Get());
 	}
-	
-	return FVector(-1.f, 0.f, 0.f);
 }

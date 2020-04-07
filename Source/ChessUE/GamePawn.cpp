@@ -57,12 +57,14 @@ void AGamePawn::ClickChessPiece()
 		if (CurrentChessPieceFocus) 
 		{
 			TraceForCeil(Start, End);
-			MoveFigureToCeil();
+			//MoveFigureToCeil();
 			CurrentChessPieceFocus = nullptr;
+			CurrentCellFocus = nullptr;
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}
 		else
 		{	
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("try to find"));
 			TraceForChessPiece(Start, End);
 		}
 	}	
@@ -109,5 +111,8 @@ void AGamePawn::TraceForCeil(const FVector& Start, const FVector& End)
 	if(CeilHit.Actor.IsValid())
 	{
 		CurrentCellFocus = Cast<ABoardCell>(CeilHit.Actor.Get());
+		if (CurrentCellFocus != nullptr) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new cell"));
+		}
 	}
 }

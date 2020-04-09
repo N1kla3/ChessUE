@@ -57,8 +57,10 @@ void AGamePawn::ClickChessPiece()
 		if (CurrentChessPieceFocus) 
 		{
 			TraceForCeil(Start, End);
-			MoveFigureToCeil();
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
+			if (CurrentCellFocus) {
+				MoveFigureToCeil();
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
+			}
 		}
 		else
 		{	

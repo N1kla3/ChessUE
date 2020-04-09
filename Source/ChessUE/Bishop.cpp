@@ -28,6 +28,7 @@ void ABishop::Init()
 	if (VisualAsset.Succeeded())
 	{
 		Figure->SetStaticMesh(VisualAsset.Object);
+		Figure->SetCollisionProfileName(TEXT("ForFigures"));
 	}
 	Figure->SetupAttachment(RootComponent);
 }

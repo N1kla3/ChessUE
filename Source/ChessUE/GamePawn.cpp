@@ -57,9 +57,7 @@ void AGamePawn::ClickChessPiece()
 		if (CurrentChessPieceFocus) 
 		{
 			TraceForCeil(Start, End);
-			//MoveFigureToCeil();
-			CurrentChessPieceFocus = nullptr;
-			CurrentCellFocus = nullptr;
+			MoveFigureToCeil();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}
 		else
@@ -81,13 +79,15 @@ void AGamePawn::MoveFigureToCeil()
 	FVector newLocation = CurrentCellFocus->GetActorLocation();
 	CurrentChessPieceFocus->SetActorLocation(newLocation+FVector(0.f, 0.f, 100.f));
 	CurrentChessPieceFocus->SetBoardLocation(CurrentCellFocus->GetBoardLocation());
+	CurrentChessPieceFocus = nullptr;
+	CurrentCellFocus = nullptr;
 }
 
 
 void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 {
 	FHitResult FigureHit;
-	GetWorld()->LineTraceSingleByChannel(FigureHit, Start, End, ECC_Visibility);
+	GetWorld()->LineTraceSingleByChannel(FigureHit, Start, End, ECC_GameTraceChannel1);
 
 	if(FigureHit.Actor.IsValid())
 	{

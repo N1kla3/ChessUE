@@ -11,7 +11,7 @@ ABishop::ABishop()
 	Init(pathToModel);
 }
 
-bool ABishop::CanMoveToLocation(FBoardLocation)
+bool ABishop::CanMoveToLocation(FBoardLocation cell)
 {
 	return true;
 }

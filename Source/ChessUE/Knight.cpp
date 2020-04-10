@@ -1,18 +1,15 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Rook.h"
-#include "Components/StaticMeshComponent.h"
+#include "Knight.h"
 
-ARook::ARook()
-	: AChessPiece()
+AKnight::AKnight()
 {
 	const TCHAR* pathToModel = L"???";
 	Init(pathToModel);
 }
 
-bool ARook::CanMoveToLocation(FBoardLocation cell)
+bool AKnight::CanMoveToLocation(FBoardLocation cell)
 {
 	return true;
 }
-

@@ -3,6 +3,7 @@
 
 #include "ChessPiece.h"
 #include "Components/StaticMeshComponent.h"
+#include "ConstructorHelpers.h"
 
 // Sets default values
 AChessPiece::AChessPiece()
@@ -15,6 +16,22 @@ void AChessPiece::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void AChessPiece::Init(const TCHAR* pathToModel)
+{
+	ConstructorHelpers::FObjectFinder<UStaticMesh> visualAsset(pathToModel);
+
+	FigScene = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
+	RootComponent = FigScene;
+
+	Figure = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("figure"));
+	if (visualAsset.Succeeded())
+	{
+		Figure->SetStaticMesh(visualAsset.Object);
+		Figure->SetCollisionProfileName(TEXT("ForFigures"));
+	}
+	Figure->SetupAttachment(RootComponent);
 }
 
 bool AChessPiece::CanMoveToLocation(FBoardLocation cell)

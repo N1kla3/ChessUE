@@ -4,17 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "ChessPiece.h"
-#include "Bishop.generated.h"
+#include "Rook.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CHESSUE_API ABishop : public AChessPiece
+class CHESSUE_API ARook : public AChessPiece
 {
 	GENERATED_BODY()
+
 public:
-	ABishop();
-	
-	virtual bool CanMoveToLocation(FBoardLocation cell) override;
+	ARook();
+
+	virtual bool CanMoveToLocation(FBoardLocation)override;
+
 };

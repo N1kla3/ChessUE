@@ -1,17 +1,18 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Bishop.h"
+#include "Rook.h"
 #include "Components/StaticMeshComponent.h"
 
-ABishop::ABishop()
-	:AChessPiece()
+ARook::ARook()
+	: AChessPiece()
 {
-	const TCHAR* pathToModel = L"/Game/Shape_Cone.Shape_Cone";
+	const TCHAR* pathToModel = L"???";
 	Init(pathToModel);
 }
 
-bool ABishop::CanMoveToLocation(FBoardLocation)
+bool ARook::CanMoveToLocation(FBoardLocation)
 {
 	return true;
 }
+

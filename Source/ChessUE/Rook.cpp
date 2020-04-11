@@ -7,7 +7,7 @@
 ARook::ARook()
 	: AChessPiece()
 {
-	const TCHAR* pathToModel = L"???";
+	const TCHAR* pathToModel = L"/Game/Shape_Cone.Shape_Cone";
 	Init(pathToModel);
 }
 

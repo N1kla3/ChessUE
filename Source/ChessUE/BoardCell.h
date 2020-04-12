@@ -1,7 +1,10 @@
 #pragma once
 
+#include "ChessPiece.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+
 #include "BoardCell.generated.h"
 
 typedef TPair<int32, int32> FBoardLocation;
@@ -28,6 +31,7 @@ public:
 	ABoardCell(int32 X, int32 Y);
 
 	void SetBoardLocation(FBoardLocation);
+	void SetPiece(AChessPiece *piece);
 
 	FBoardLocation GetBoardLocation();
 
@@ -45,4 +49,5 @@ private:
 private:
 	void InitMesh();
 
+	AChessPiece *piece = nullptr;
 };

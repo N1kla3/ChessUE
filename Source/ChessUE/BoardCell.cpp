@@ -2,8 +2,10 @@
 
 
 #include "BoardCell.h"
-#include "Components/StaticMeshComponent.h"
 #include "ConstructorHelpers.h"
+
+#include "Components/StaticMeshComponent.h"
+
 
 // Sets default values
 ABoardCell::ABoardCell()
@@ -23,6 +25,13 @@ void ABoardCell::SetBoardLocation(FBoardLocation newLocation)
 {
 	Xcoord = newLocation.Key;
 	Ycoord = newLocation.Value;
+}
+
+void ABoardCell::SetPiece(AChessPiece *piece)
+{
+	this->piece = piece;
+
+	this->piece->SetActorLocation(GetActorLocation() + FVector(0.f, 0.f, 100.f));
 }
 
 FBoardLocation ABoardCell::GetBoardLocation()

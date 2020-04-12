@@ -59,6 +59,5 @@ void AChessPiece::SetBoardLocation(FBoardLocation Location)
 void AChessPiece::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 

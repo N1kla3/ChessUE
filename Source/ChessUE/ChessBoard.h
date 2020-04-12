@@ -3,8 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BoardCell.h"
+
 #include "GameFramework/Actor.h"
+
 #include "ChessBoard.generated.h"
+
 
 UCLASS()
 class CHESSUE_API AChessBoard : public AActor
@@ -39,4 +43,7 @@ public:
 
 private:
 	void SpawnCells();
+
+	UPROPERTY()
+	TArray<ABoardCell *> cells;
 };

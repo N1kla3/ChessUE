@@ -2,7 +2,8 @@
 
 
 #include "ChessBoard.h"
-#include "BoardCell.h"
+#include "Bishop.h"
+
 #include "Engine/World.h"
 
 // Sets default values
@@ -43,9 +44,16 @@ void AChessBoard::SpawnCells()
 		{
 			FRotator rotation = FRotator(0.f, 0.f, 0.f);
 			FVector spawnLocation = curActorLocation + FVector(Space*i, Space*k, 0.f);
-			ABoardCell* temp = GetWorld()->SpawnActor<ABoardCell>(spawnLocation, rotation);
-			temp->SetBoardLocation(FBoardLocation(i, k));
+            ABoardCell* cell = GetWorld()->SpawnActor<ABoardCell>(spawnLocation, rotation);
+			cell->SetBoardLocation(FBoardLocation(i, k));
+			cells.Add(cell);
 		}
 	}
+
+	FRotator rot(0.f, 0.f, 0.f);
+	// pair of good guys
+	cells[2 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(curActorLocation, rot));
+	cells[5 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(curActorLocation, rot));
+	
 }
 

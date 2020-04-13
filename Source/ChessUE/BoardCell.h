@@ -21,14 +21,16 @@ public:
 
 	UPROPERTY()
 	UStaticMeshComponent* UCellMesh;
+
+private:
+	
+	AChessPiece* piece = nullptr;
 	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	ABoardCell();
-
-	ABoardCell(int32 X, int32 Y);
 
 	void SetBoardLocation(FBoardLocation);
 	void SetPiece(AChessPiece *piece);
@@ -49,5 +51,4 @@ private:
 private:
 	void InitMesh();
 
-	AChessPiece *piece = nullptr;
 };

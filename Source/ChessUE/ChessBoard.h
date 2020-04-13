@@ -32,6 +32,10 @@ public:
 	// Sets default values for this actor's properties
 	AChessBoard();
 
+private:
+	UPROPERTY()
+	TArray<ABoardCell*> cells;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -44,6 +48,5 @@ public:
 private:
 	void SpawnCells();
 
-	UPROPERTY()
-	TArray<ABoardCell *> cells;
+	void SpawnOnePlayerFigures();
 };

@@ -2,7 +2,12 @@
 
 
 #include "ChessBoard.h"
+#include "Rook.h"
+#include "Knight.h"
 #include "Bishop.h"
+#include "King.h"
+#include "Queen.h"
+#include "ChessPawn.h"
 
 #include "Engine/World.h"
 
@@ -25,6 +30,7 @@ void AChessBoard::BeginPlay()
 {
 	Super::BeginPlay();
 	SpawnCells();
+	SpawnOnePlayerFigures();
 }
 
 // Called every frame
@@ -49,11 +55,28 @@ void AChessBoard::SpawnCells()
 			cells.Add(cell);
 		}
 	}
+}
 
+void AChessBoard::SpawnOnePlayerFigures()
+{
+	FVector curActorLocation = GetActorLocation();
 	FRotator rot(0.f, 0.f, 0.f);
-	// pair of good guys
+
+	cells[0 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(curActorLocation, rot));
+	cells[7 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(curActorLocation, rot));
+
+	cells[1 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKnight>(curActorLocation, rot));
+	cells[6 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKnight>(curActorLocation, rot));
+
 	cells[2 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(curActorLocation, rot));
 	cells[5 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(curActorLocation, rot));
-	
+
+	cells[3 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKing>(curActorLocation, rot));
+	cells[4 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AQueen>(curActorLocation, rot));
+
+	for(int i = 0; i < ROWS; i++)
+	{
+		cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(curActorLocation, rot));
+	}
 }
 

@@ -14,13 +14,6 @@ ABoardCell::ABoardCell()
 	InitMesh();
 }
 
-ABoardCell::ABoardCell(int32 X, int32 Y)
-	: Xcoord(X)
-	, Ycoord(Y)
-{
-	InitMesh();
-}
-
 void ABoardCell::SetBoardLocation(FBoardLocation newLocation)
 {
 	Xcoord = newLocation.Key;

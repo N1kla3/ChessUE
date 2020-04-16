@@ -23,7 +23,8 @@ public:
 	UStaticMeshComponent* UCellMesh;
 
 private:
-	
+
+	UPROPERTY()
 	AChessPiece* piece = nullptr;
 	
 public:	

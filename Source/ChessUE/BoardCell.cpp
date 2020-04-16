@@ -25,6 +25,7 @@ void ABoardCell::SetPiece(AChessPiece *piece)
 	this->piece = piece;
 
 	this->piece->SetActorLocation(GetActorLocation() + FVector(0.f, 0.f, 100.f));
+	this->piece->SetBoardLocation(GetBoardLocation());
 }
 
 FBoardLocation ABoardCell::GetBoardLocation()

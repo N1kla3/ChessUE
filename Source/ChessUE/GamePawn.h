@@ -3,7 +3,7 @@
 #include "BoardCell.h"
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
-#include "ChessPiece.h"
+#include "ChessBoard.h"
 #include "GameFramework/Pawn.h"
 #include "GamePawn.generated.h"
 
@@ -33,6 +33,9 @@ protected:
 
 	UPROPERTY()
 	ABoardCell* CurrentCellFocus;
+
+	UPROPERTY()
+	AChessBoard* Board;
 	
 public:
 	// Called every frame

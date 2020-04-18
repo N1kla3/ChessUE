@@ -49,6 +49,16 @@ FBoardLocation AChessPiece::GetBoardLocation()
 	return FBoardLocation(XBoardCoord, YBoardCoord);
 }
 
+TBasicArray<FBoardLocation>& AChessPiece::GetAllMoves()
+{
+	return AllMoves;
+}
+
+TBasicArray<FBoardLocation>& AChessPiece::GetCorrectMoves()
+{
+	return AllMoves;
+}
+
 void AChessPiece::SetBoardLocation(FBoardLocation Location)
 {
 	XBoardCoord = Location.Key;

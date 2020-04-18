@@ -36,6 +36,8 @@ protected:
 
 	UPROPERTY()
 	AChessBoard* Board;
+
+	TBasicArray<FBoardLocation> CurrFigureMoves;
 	
 public:
 	// Called every frame
@@ -43,11 +45,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
 	void ClickChessPiece();
 
 	void MoveChessPiece(float a);
 
 	void MoveFigureToCeil();
+
+	TBasicArray<FBoardLocation>& GetOccupiedLocations(TBasicArray<FBoardLocation>);
 
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
 

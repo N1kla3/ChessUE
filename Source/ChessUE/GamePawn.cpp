@@ -90,6 +90,11 @@ void AGamePawn::MoveFigureToCeil()
 	CurrentCellFocus = nullptr;
 }
 
+TBasicArray<FBoardLocation>& AGamePawn::GetOccupiedLocations(TBasicArray<FBoardLocation>)
+{
+	return CurrFigureMoves;
+}
+
 
 void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 {

@@ -3,8 +3,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Containers/BasicArray.h"
 #include "ChessPiece.generated.h"
-
 typedef TPair<int32, int32> FBoardLocation;
 
 UCLASS(Abstract)
@@ -28,6 +28,9 @@ protected:
 	
 	UPROPERTY()
 	UStaticMeshComponent* Figure;
+
+	
+	TBasicArray<FBoardLocation> AllMoves;
 	
 
 public:
@@ -37,6 +40,9 @@ public:
 
 	FBoardLocation GetBoardLocation();
 
+	virtual TBasicArray<FBoardLocation>& GetAllMoves();
+	virtual TBasicArray<FBoardLocation>& GetCorrectMoves();
+	
 	void SetBoardLocation(FBoardLocation);
 	
 protected:

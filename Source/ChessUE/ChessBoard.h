@@ -28,6 +28,7 @@ public:
 
 	FBoardLocation WKingLocation;
 	FBoardLocation BKingLocation;
+	TBasicArray<FBoardLocation> FigureMoves;
 	
 	UPROPERTY()
 	USceneComponent* URoot;
@@ -52,6 +53,8 @@ public:
 	bool CheckForMate();
 	
 private:
+	TBasicArray<FBoardLocation>& GetBlockCellsLoc(TBasicArray<FBoardLocation> AllMoves);
+	
 	void SpawnCells();
 
 	void SpawnOnePlayerFigures();

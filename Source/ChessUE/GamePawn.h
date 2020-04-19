@@ -52,7 +52,7 @@ private:
 
 	void MoveFigureToCeil();
 
-	TBasicArray<FBoardLocation>& GetOccupiedLocations(TBasicArray<FBoardLocation>);
+	TBasicArray<FBoardLocation>& GetOccupiedLocations();
 
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
 

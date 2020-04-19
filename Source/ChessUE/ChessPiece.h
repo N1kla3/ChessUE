@@ -41,7 +41,7 @@ public:
 	FBoardLocation GetBoardLocation();
 
 	virtual TBasicArray<FBoardLocation>& GetAllMoves();
-	virtual TBasicArray<FBoardLocation>& GetCorrectMoves();
+	virtual TBasicArray<FBoardLocation>& GetCorrectMoves(TBasicArray<FBoardLocation> &blockCells);
 	
 	void SetBoardLocation(FBoardLocation);
 	

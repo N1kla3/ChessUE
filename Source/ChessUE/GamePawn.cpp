@@ -91,7 +91,7 @@ void AGamePawn::MoveFigureToCeil()
 	CurrentCellFocus = nullptr;
 }
 
-TBasicArray<FBoardLocation>& AGamePawn::GetOccupiedLocations(TBasicArray<FBoardLocation>)
+TBasicArray<FBoardLocation>& AGamePawn::GetOccupiedLocations()
 {
 	return CurrFigureMoves;
 }
@@ -137,6 +137,7 @@ void AGamePawn::FindChessBoard()
 		Board = Cast<AChessBoard>(*Itr);
 		if(Board)
 		{
+
 			return;
 		}
 	}

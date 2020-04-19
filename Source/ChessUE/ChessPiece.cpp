@@ -54,7 +54,7 @@ TBasicArray<FBoardLocation>& AChessPiece::GetAllMoves()
 	return AllMoves;
 }
 
-TBasicArray<FBoardLocation>& AChessPiece::GetCorrectMoves()
+TBasicArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TBasicArray<FBoardLocation>& blockCells)
 {
 	return AllMoves;
 }

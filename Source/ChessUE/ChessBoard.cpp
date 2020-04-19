@@ -50,6 +50,11 @@ bool AChessBoard::CheckForMate()
 	return true;
 }
 
+TBasicArray<FBoardLocation>& AChessBoard::GetBlockCellsLoc(TBasicArray<FBoardLocation> AllMoves)
+{
+	return FigureMoves;
+}
+
 void AChessBoard::SpawnCells()
 {
 	FVector curActorLocation = GetActorLocation();

@@ -57,4 +57,6 @@ private:
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
 
 	void TraceForCeil(const FVector& Start, const FVector& End);
+
+	void FindChessBoard();
 };

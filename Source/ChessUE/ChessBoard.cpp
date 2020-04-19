@@ -40,6 +40,16 @@ void AChessBoard::Tick(float DeltaTime)
 
 }
 
+bool AChessBoard::CheckForCheck()
+{
+	return true;
+}
+
+bool AChessBoard::CheckForMate()
+{
+	return true;
+}
+
 void AChessBoard::SpawnCells()
 {
 	FVector curActorLocation = GetActorLocation();

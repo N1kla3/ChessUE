@@ -5,6 +5,7 @@
 
 #include "BoardCell.h"
 #include "Engine/Engine.h"
+#include "EngineUtils.h"
 #include "GameFramework/PlayerController.h"
 
 
@@ -125,6 +126,18 @@ void AGamePawn::TraceForCeil(const FVector& Start, const FVector& End)
 		CurrentCellFocus = Cast<ABoardCell>(CeilHit.Actor.Get());
 		if (CurrentCellFocus != nullptr) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new cell"));
+		}
+	}
+}
+
+void AGamePawn::FindChessBoard()
+{
+	for (TActorIterator<AChessBoard> Itr(GetWorld()); Itr; ++Itr) 
+	{
+		Board = Cast<AChessBoard>(*Itr);
+		if(Board)
+		{
+			return;
 		}
 	}
 }

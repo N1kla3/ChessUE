@@ -26,6 +26,9 @@ public:
 	UPROPERTY(EditAnywhere, Category="Proporties")
 	float Space;
 
+	FBoardLocation WKingLocation;
+	FBoardLocation BKingLocation;
+	
 	UPROPERTY()
 	USceneComponent* URoot;
 	
@@ -45,8 +48,13 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool CheckForCheck();
+	bool CheckForMate();
+	
 private:
 	void SpawnCells();
 
 	void SpawnOnePlayerFigures();
+
+	
 };

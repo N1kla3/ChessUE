@@ -23,6 +23,9 @@ protected:
 	UPROPERTY()
 	int32 YBoardCoord;
 
+	const int32 MINlocation = 1;
+	const int32 MAXlocation = 8;
+
 	UPROPERTY()
 	USceneComponent* FigScene;
 	
@@ -50,5 +53,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void Init(const TCHAR* pathToModel);
+
+	bool IsOnBoard(int32 X, int32 Y)const;
 	
 };

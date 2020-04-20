@@ -34,6 +34,19 @@ void AChessPiece::Init(const TCHAR* pathToModel)
 	Figure->SetupAttachment(RootComponent);
 }
 
+bool AChessPiece::IsOnBoard(int32 X, int32 Y)const
+{
+	if(X > MAXlocation && X < MINlocation)
+	{
+		return false;
+	}
+	if(Y > MAXlocation && Y < MINlocation)
+	{
+		return false;
+	}
+	return true;
+}
+
 bool AChessPiece::CanMoveToLocation(FBoardLocation cell)
 {
 	return true;

@@ -91,7 +91,7 @@ void AGamePawn::MoveFigureToCeil()
 	CurrentCellFocus = nullptr;
 }
 
-TBasicArray<FBoardLocation>& AGamePawn::GetOccupiedLocations()
+TArray<FBoardLocation>& AGamePawn::GetOccupiedLocations()
 {
 	return CurrFigureMoves;
 }

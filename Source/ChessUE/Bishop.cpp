@@ -15,3 +15,12 @@ bool ABishop::CanMoveToLocation(FBoardLocation cell)
 {
 	return true;
 }
+
+TArray<FBoardLocation>& ABishop::GetAllMoves()
+{
+	for(size_t i = MINlocation; i <= MAXlocation; ++i)
+	{
+		
+	}
+	return AllMoves;
+}

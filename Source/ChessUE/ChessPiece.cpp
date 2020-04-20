@@ -62,12 +62,12 @@ FBoardLocation AChessPiece::GetBoardLocation()
 	return FBoardLocation(XBoardCoord, YBoardCoord);
 }
 
-TBasicArray<FBoardLocation>& AChessPiece::GetAllMoves()
+TArray<FBoardLocation>& AChessPiece::GetAllMoves()
 {
 	return AllMoves;
 }
 
-TBasicArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TBasicArray<FBoardLocation>& blockCells)
+TArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
 {
 	return AllMoves;
 }

@@ -33,7 +33,7 @@ protected:
 	UStaticMeshComponent* Figure;
 
 	
-	TBasicArray<FBoardLocation> AllMoves;
+	TArray<FBoardLocation> AllMoves;
 	
 
 public:
@@ -43,8 +43,8 @@ public:
 
 	FBoardLocation GetBoardLocation();
 
-	virtual TBasicArray<FBoardLocation>& GetAllMoves();
-	virtual TBasicArray<FBoardLocation>& GetCorrectMoves(TBasicArray<FBoardLocation> &blockCells);
+	virtual TArray<FBoardLocation>& GetAllMoves();
+	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation> &blockCells);
 	
 	void SetBoardLocation(FBoardLocation);
 	

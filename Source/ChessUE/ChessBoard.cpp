@@ -50,7 +50,7 @@ bool AChessBoard::CheckForMate()
 	return true;
 }
 
-TBasicArray<FBoardLocation>& AChessBoard::GetBlockCellsLoc(TBasicArray<FBoardLocation> AllMoves)
+TArray<FBoardLocation>& AChessBoard::GetBlockCellsLoc(TArray<FBoardLocation> AllMoves)
 {
 	return FigureMoves;
 }

@@ -37,7 +37,7 @@ protected:
 	UPROPERTY()
 	AChessBoard* Board;
 
-	TBasicArray<FBoardLocation> CurrFigureMoves;
+	TArray<FBoardLocation> CurrFigureMoves;
 	
 public:
 	// Called every frame
@@ -52,7 +52,7 @@ private:
 
 	void MoveFigureToCeil();
 
-	TBasicArray<FBoardLocation>& GetOccupiedLocations();
+	TArray<FBoardLocation>& GetOccupiedLocations();
 
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
 

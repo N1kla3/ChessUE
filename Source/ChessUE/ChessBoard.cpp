@@ -52,6 +52,19 @@ bool AChessBoard::CheckForMate()
 
 TArray<FBoardLocation>& AChessBoard::GetBlockCellsLoc(TArray<FBoardLocation> AllMoves)
 {
+	FigureMoves.Empty();
+	
+	for(auto i : cells)
+	{
+		for(const auto k : AllMoves)
+		{
+			const auto cell = i->GetBoardLocation();
+			if(k.Key == cell.Key && k.Value == cell.Value)
+			{
+				FigureMoves.Add(k);
+			}
+		}
+	}
 	return FigureMoves;
 }
 

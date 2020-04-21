@@ -72,6 +72,7 @@ TArray<FBoardLocation>& ABishop::GetCorrectMoves(TArray<FBoardLocation>& blockCe
 			}
 		}
 	}
+	oneSide = true, secSide = true;
 
 	for (size_t i = XBoardCoord - 1; i > 0 ; i--)
 	{

@@ -35,7 +35,8 @@ public:
 
 	void SetBoardLocation(FBoardLocation);
 	void SetPiece(AChessPiece *piece);
-
+	void DestroyPiece();
+	
 	FBoardLocation GetBoardLocation();
 
 protected:

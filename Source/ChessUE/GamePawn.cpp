@@ -48,6 +48,11 @@ void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AGamePawn::ClickChessPiece()
 {
+	if(!Board)
+	{
+		FindChessBoard();
+	}
+	
 	APlayerController* PC = Cast<APlayerController>(GetController());
 	if (PC)
 	{
@@ -58,15 +63,7 @@ void AGamePawn::ClickChessPiece()
 		if (CurrentChessPieceFocus) 
 		{
 			TraceForCeil(Start, End);
-			if (CurrentCellFocus) {
-				MoveFigureToCeil();
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
-			}
-			else
-			{
-				CurrentChessPieceFocus = nullptr;
-				CurrentCellFocus = nullptr;
-			}
+			HandleChessPiece();
 		}
 		else
 		{	
@@ -84,9 +81,8 @@ void AGamePawn::MoveChessPiece(float a)
 
 void AGamePawn::MoveFigureToCeil()
 {
-	FVector newLocation = CurrentCellFocus->GetActorLocation();
-	CurrentChessPieceFocus->SetActorLocation(newLocation+FVector(0.f, 0.f, 100.f));
-	CurrentChessPieceFocus->SetBoardLocation(CurrentCellFocus->GetBoardLocation());
+	CurrentCellFocus->DestroyPiece();
+	CurrentCellFocus->SetPiece(CurrentChessPieceFocus);
 	CurrentChessPieceFocus = nullptr;
 	CurrentCellFocus = nullptr;
 }
@@ -137,8 +133,25 @@ void AGamePawn::FindChessBoard()
 		Board = Cast<AChessBoard>(*Itr);
 		if(Board)
 		{
-
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find board"));
 			return;
 		}
+	}
+}
+
+void AGamePawn::HandleChessPiece()
+{
+	if (CurrentCellFocus) {
+		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation()))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
+			MoveFigureToCeil();
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
+	}
+	else
+	{
+		CurrentChessPieceFocus = nullptr;
+		CurrentCellFocus = nullptr;
 	}
 }

@@ -40,6 +40,11 @@ void AChessBoard::Tick(float DeltaTime)
 
 }
 
+bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
+{
+	return true;
+}
+
 bool AChessBoard::CheckForCheck()
 {
 	return true;

@@ -28,6 +28,14 @@ void ABoardCell::SetPiece(AChessPiece *piece)
 	this->piece->SetBoardLocation(GetBoardLocation());
 }
 
+void ABoardCell::DestroyPiece()
+{
+	if (piece)
+	{
+		piece->Destroy();
+	}
+}
+
 FBoardLocation ABoardCell::GetBoardLocation()
 {
 	return FBoardLocation(Xcoord, Ycoord);

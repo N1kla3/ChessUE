@@ -49,6 +49,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool CheckEverything(FBoardLocation MoveToLocation);
 	bool CheckForCheck();
 	bool CheckForMate();
 	

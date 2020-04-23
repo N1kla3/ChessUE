@@ -14,8 +14,12 @@ UCLASS()
 class CHESSUE_API AChessBoard : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:
+	// Sets default values for this actor's properties
+	AChessBoard();
+	
+private:
 
 	UPROPERTY(EditAnywhere, Category="Proprties")
 	int32 ROWS;
@@ -28,17 +32,22 @@ public:
 
 	FBoardLocation WKingLocation;
 	FBoardLocation BKingLocation;
+
+	FBoardLocation WhoBeatWhiteKing;
+	FBoardLocation WhoBeatBlackKing;
+
+	bool bIsCheckToWhite;
+	bool bIsCheckToBlack;
+
 	TArray<FBoardLocation> FigureMoves;
+	TArray<FBoardLocation> FigsLocation;
 	
 	UPROPERTY()
 	USceneComponent* URoot;
 	
-	// Sets default values for this actor's properties
-	AChessBoard();
-
-private:
 	UPROPERTY()
 	TArray<ABoardCell*> cells;
+
 	
 protected:
 	// Called when the game starts or when spawned
@@ -50,15 +59,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	bool CheckEverything(FBoardLocation MoveToLocation);
-	bool CheckForCheck();
-	bool CheckForMate();
 	
 private:
-	TArray<FBoardLocation>& GetBlockCellsLoc(TArray<FBoardLocation> AllMoves);
+	bool CheckForCheck();
+	bool CheckForMate();
+	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
+	TArray<FBoardLocation>& GetAllBlockCells();
 	
 	void SpawnCells();
 
 	void SpawnOnePlayerFigures();
 
-	
 };

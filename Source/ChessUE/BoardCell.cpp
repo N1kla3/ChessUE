@@ -28,6 +28,11 @@ void ABoardCell::SetPiece(AChessPiece *piece)
 	this->piece->SetBoardLocation(GetBoardLocation());
 }
 
+AChessPiece* ABoardCell::GetPiece()
+{
+	return piece ? piece : nullptr;
+}
+
 void ABoardCell::DestroyPiece()
 {
 	if (piece)

@@ -41,6 +41,9 @@ private:
 
 	TArray<FBoardLocation> FigureMoves;
 	TArray<FBoardLocation> FigsLocation;
+
+	UPROPERTY()
+	AChessPiece* ChosenPiece;
 	
 	UPROPERTY()
 	USceneComponent* URoot;
@@ -48,6 +51,7 @@ private:
 	UPROPERTY()
 	TArray<ABoardCell*> cells;
 
+	TMap<FBoardLocation, TArray<FBoardLocation>> PossibleChecks;
 	
 protected:
 	// Called when the game starts or when spawned
@@ -59,6 +63,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	bool CheckEverything(FBoardLocation MoveToLocation);
+
+	void SetChosenPiece(AChessPiece* Piece);
 	
 private:
 	bool CheckForCheck();

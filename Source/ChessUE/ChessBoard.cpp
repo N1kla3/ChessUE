@@ -44,6 +44,13 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
     return true;
 }
 
+void AChessBoard::SetChosenPiece(AChessPiece* Piece)
+{
+    ChosenPiece = Piece;
+    CheckForCheck();
+    
+}
+
 bool AChessBoard::CheckForCheck()
 {
     return true;
@@ -54,6 +61,11 @@ bool AChessBoard::CheckForMate()
     return true;
 }
 
+/**
+ * \brief Gets All moves of figure and return locations of figures placed on that moves 
+ * \param AllMoves 
+ * \return 
+ */
 TArray<FBoardLocation>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves)
 {
     FigureMoves.Empty();

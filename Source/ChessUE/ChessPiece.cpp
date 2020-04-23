@@ -62,11 +62,21 @@ FBoardLocation AChessPiece::GetBoardLocation()
 	return FBoardLocation(XBoardCoord, YBoardCoord);
 }
 
+TArray<FBoardLocation>& AChessPiece::TryForEnemyKing(FBoardLocation KingLocation)
+{
+	return AllMoves;
+}
+
 TArray<FBoardLocation>& AChessPiece::GetAllMoves()
 {
 	return AllMoves;
 }
 
+/**
+ * \brief Calculates and return all practically possible moves(Possible "Check" is not calculated)
+ * \param blockCells it is locations of figures that placed on the possible Move locations of our figure
+ * \return Moves considering other figures, but not check
+ */
 TArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
 {
 	return AllMoves;

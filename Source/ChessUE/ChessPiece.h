@@ -3,7 +3,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Containers/BasicArray.h"
+#include "Containers/Map.h"
 #include "ChessPiece.generated.h"
 typedef TPair<int32, int32> FBoardLocation;
 
@@ -32,7 +32,9 @@ protected:
 	UPROPERTY()
 	UStaticMeshComponent* Figure;
 
-	
+	/**
+	 * Array that keeps all possible moves of figure, independently of other figures locations
+	 */
 	TArray<FBoardLocation> AllMoves;
 	
 
@@ -42,11 +44,16 @@ public:
 	void Highlight();
 
 	FBoardLocation GetBoardLocation();
+	void SetBoardLocation(FBoardLocation);
 
+	/**
+	 * \brief If it theoretically possible to beat a king, return a path from figure to enemy King
+	 * \param KingLocation 
+	 * \return that path
+	 */
+	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation);
 	virtual TArray<FBoardLocation>& GetAllMoves();
 	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation> &blockCells);
-	
-	void SetBoardLocation(FBoardLocation);
 	
 protected:
 	// Called when the game starts or when spawned

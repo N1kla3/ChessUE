@@ -67,10 +67,12 @@ public:
 	void SetChosenPiece(AChessPiece* Piece);
 	
 private:
-	bool CheckForCheck();
+	bool CheckForCheck(FBoardLocation KingLocation);
 	bool CheckForMate();
 	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
 	TArray<FBoardLocation>& GetAllBlockCells();
+
+	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation KingLocation);
 	
 	void SpawnCells();
 

@@ -47,12 +47,24 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
 void AChessBoard::SetChosenPiece(AChessPiece* Piece)
 {
     ChosenPiece = Piece;
-    CheckForCheck();
+    CheckForCheck(WKingLocation);
     
 }
 
-bool AChessBoard::CheckForCheck()
+bool AChessBoard::CheckForCheck(FBoardLocation KingLocation)
 {
+    for(auto enemyCell : cells)
+    {
+        if(auto fig = enemyCell->GetPiece())
+        {
+            TArray<FBoardLocation> temp = fig->TryForEnemyKing(KingLocation);
+            if(temp.IsValidIndex(0))
+            {
+                CanBeatKing(temp, KingLocation);
+                PossibleChecks.Add(fig->GetBoardLocation(), temp);
+            }
+        }
+    }
     return true;
 }
 
@@ -94,6 +106,17 @@ TArray<FBoardLocation>& AChessBoard::GetAllBlockCells()
         }
     }
     return FigsLocation;
+}
+
+void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation KingLocation)
+{
+    for(auto i : EnemyFigMoves)
+    {
+        if(i == KingLocation)
+        {
+            bIsCheckToBlack = true;
+        }
+    }
 }
 
 void AChessBoard::SpawnCells()

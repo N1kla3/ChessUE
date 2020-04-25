@@ -34,7 +34,7 @@ public:
 	ABoardCell();
 
 	void SetBoardLocation(FBoardLocation);
-	void SetPiece(AChessPiece *piece, TEnumAsByte<FigureColor> s);
+	void SetPiece(AChessPiece *piece, TEnumAsByte<FigureColor> Color);
 	AChessPiece* GetPiece();
 	void DestroyPiece();
 	

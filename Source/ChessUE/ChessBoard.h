@@ -72,7 +72,7 @@ private:
 	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
 	TArray<FBoardLocation>& GetAllBlockCells();
 
-	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation KingLocation);
+	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Side);
 	
 	void SpawnCells();
 

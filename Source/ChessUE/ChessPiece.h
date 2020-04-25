@@ -58,7 +58,7 @@ public:
 	/**
 	 * \brief If it theoretically possible to beat a king, return a path from figure to enemy King
 	 * \param KingLocation 
-	 * \return that path
+	 * \return that path FROM figure TO king!!!
 	 */
 	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation);
 	virtual TArray<FBoardLocation>& GetAllMoves();

@@ -2,6 +2,7 @@
 
 
 #include "ChessBoard.h"
+
 #include "Rook.h"
 #include "Knight.h"
 #include "Bishop.h"
@@ -73,9 +74,9 @@ bool AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
             if(fig->GetColor() != Color)
             {
                 TArray<FBoardLocation> temp = fig->TryForEnemyKing(kingLocation);
+                CanBeatKing(temp, Color);
                 if(temp.IsValidIndex(0))
                 {
-                    CanBeatKing(temp, kingLocation);
                     PossibleChecks.Add(fig->GetBoardLocation(), temp);
                 }
             }
@@ -124,13 +125,33 @@ TArray<FBoardLocation>& AChessBoard::GetAllBlockCells()
     return FigsLocation;
 }
 
-void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation KingLocation)
+void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Color)
 {
-    for(auto i : EnemyFigMoves)
+    int8 counter = 0;
+    TArray<FBoardLocation> temp = EnemyFigMoves;
+    EnemyFigMoves.Empty();
+    const auto KingLocation = (Color == White ? WKingLocation : BKingLocation);
+    for(auto moves : temp)
     {
-        if(i == KingLocation)
+        if(moves == KingLocation)
         {
             bIsCheckToBlack = true;
+            break;
+        }
+        if(counter < 1)EnemyFigMoves.Add(moves);
+        for(auto figs : FigsLocation)
+        {
+            if(figs == moves)
+            {
+                
+                counter++;
+                break;
+            }
+        }
+        if(counter > 1)
+        {
+            EnemyFigMoves.Empty();
+            return;       
         }
     }
 }

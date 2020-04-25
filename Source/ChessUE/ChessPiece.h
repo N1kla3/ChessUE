@@ -7,6 +7,13 @@
 #include "ChessPiece.generated.h"
 typedef TPair<int32, int32> FBoardLocation;
 
+UENUM()
+enum FigureColor
+{
+	White,
+	Black
+};
+
 UCLASS(Abstract)
 class CHESSUE_API AChessPiece : public AActor
 {	GENERATED_BODY()
@@ -32,6 +39,8 @@ protected:
 	UPROPERTY()
 	UStaticMeshComponent* Figure;
 
+	TEnumAsByte<FigureColor> Color;
+	
 	/**
 	 * Array that keeps all possible moves of figure, independently of other figures locations
 	 */
@@ -55,6 +64,9 @@ public:
 	virtual TArray<FBoardLocation>& GetAllMoves();
 	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation> &blockCells);
 	
+	void SetColor(TEnumAsByte<FigureColor> Color);
+	TEnumAsByte<FigureColor> GetColor() const;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -62,5 +74,5 @@ protected:
 	void Init(const TCHAR* pathToModel);
 
 	bool IsOnBoard(int32 X, int32 Y)const;
-	
+
 };

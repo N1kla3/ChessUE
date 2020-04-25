@@ -82,7 +82,7 @@ void AGamePawn::MoveChessPiece(float a)
 void AGamePawn::MoveFigureToCeil()
 {
 	CurrentCellFocus->DestroyPiece();
-	CurrentCellFocus->SetPiece(CurrentChessPieceFocus);
+	CurrentCellFocus->SetPiece(CurrentChessPieceFocus, CurrentChessPieceFocus->GetColor());
 	CurrentChessPieceFocus = nullptr;
 	CurrentCellFocus = nullptr;
 }

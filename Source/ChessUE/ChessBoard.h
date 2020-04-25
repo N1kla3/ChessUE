@@ -67,7 +67,7 @@ public:
 	void SetChosenPiece(AChessPiece* Piece);
 	
 private:
-	bool CheckForCheck(FBoardLocation KingLocation);
+	bool CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
 	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
 	TArray<FBoardLocation>& GetAllBlockCells();

@@ -47,21 +47,37 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
 void AChessBoard::SetChosenPiece(AChessPiece* Piece)
 {
     ChosenPiece = Piece;
-    CheckForCheck(WKingLocation);
+    const auto ePieceColor = Piece->GetColor();
+    CheckForCheck(ePieceColor);
     
+    FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
+
+    const bool bSideCheck = (ePieceColor == White ? bIsCheckToWhite : bIsCheckToBlack);
+    if(bSideCheck)
+    {
+        //can move only to cells that can defend king (compare with own possible)
+    }else
+    {
+        //is in defenders -> make new moves
+        //else simple moves
+    }
 }
 
-bool AChessBoard::CheckForCheck(FBoardLocation KingLocation)
+bool AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
 {
+    const FBoardLocation kingLocation = (Color == White ? WKingLocation : BKingLocation);
     for(auto enemyCell : cells)
     {
         if(auto fig = enemyCell->GetPiece())
         {
-            TArray<FBoardLocation> temp = fig->TryForEnemyKing(KingLocation);
-            if(temp.IsValidIndex(0))
+            if(fig->GetColor() != Color)
             {
-                CanBeatKing(temp, KingLocation);
-                PossibleChecks.Add(fig->GetBoardLocation(), temp);
+                TArray<FBoardLocation> temp = fig->TryForEnemyKing(kingLocation);
+                if(temp.IsValidIndex(0))
+                {
+                    CanBeatKing(temp, kingLocation);
+                    PossibleChecks.Add(fig->GetBoardLocation(), temp);
+                }
             }
         }
     }
@@ -138,20 +154,20 @@ void AChessBoard::SpawnCells()
 
 void AChessBoard::SpawnOnePlayerFigures()
 {
-    cells[0 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>());
-    cells[7 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>());
+    cells[0 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(), Black);
+    cells[7 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(), Black);
 
-    cells[1 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKnight>());
-    cells[6 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKnight>());
+    cells[1 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKnight>(), Black);
+    cells[6 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKnight>(), Black);
 
-    cells[2 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>());
-    cells[5 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>());
+    cells[2 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(), Black);
+    cells[5 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(), Black);
 
-    cells[3 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKing>());
-    cells[4 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AQueen>());
+    cells[3 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKing>(), Black);
+    cells[4 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AQueen>(), Black);
 
     for (int i = 0; i < ROWS; i++)
     {
-        cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>());
+        cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
     }
 }

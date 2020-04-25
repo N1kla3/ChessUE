@@ -8,7 +8,7 @@
 // Sets default values
 AChessPiece::AChessPiece()
 {
-	
+	Color = FigureColor::White;	
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +45,16 @@ bool AChessPiece::IsOnBoard(int32 X, int32 Y)const
 		return false;
 	}
 	return true;
+}
+
+void AChessPiece::SetColor(TEnumAsByte<FigureColor> Color)
+{
+	this->Color = Color;
+}
+
+TEnumAsByte<FigureColor> AChessPiece::GetColor() const
+{
+	return Color;
 }
 
 bool AChessPiece::CanMoveToLocation(FBoardLocation cell)

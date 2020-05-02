@@ -20,11 +20,25 @@ void ABoardCell::SetBoardLocation(FBoardLocation newLocation)
 	Ycoord = newLocation.Value;
 }
 
-void ABoardCell::SetPiece(AChessPiece *piece)
+void ABoardCell::SetPiece(AChessPiece *piece, TEnumAsByte<FigureColor> Color)
 {
 	this->piece = piece;
-
+	this->piece->SetColor(Color);
 	this->piece->SetActorLocation(GetActorLocation() + FVector(0.f, 0.f, 100.f));
+	this->piece->SetBoardLocation(GetBoardLocation());
+}
+
+AChessPiece* ABoardCell::GetPiece()
+{
+	return piece ? piece : nullptr;
+}
+
+void ABoardCell::DestroyPiece()
+{
+	if (piece)
+	{
+		piece->Destroy();
+	}
 }
 
 FBoardLocation ABoardCell::GetBoardLocation()

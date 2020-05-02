@@ -14,8 +14,12 @@ UCLASS()
 class CHESSUE_API AChessBoard : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:
+	// Sets default values for this actor's properties
+	AChessBoard();
+	
+private:
 
 	UPROPERTY(EditAnywhere, Category="Proprties")
 	int32 ROWS;
@@ -26,15 +30,28 @@ public:
 	UPROPERTY(EditAnywhere, Category="Proporties")
 	float Space;
 
+	FBoardLocation WKingLocation;
+	FBoardLocation BKingLocation;
+
+	FBoardLocation WhoBeatWhiteKing;
+	FBoardLocation WhoBeatBlackKing;
+
+	bool bIsCheckToWhite;
+	bool bIsCheckToBlack;
+
+	TArray<FBoardLocation> FigureMoves;
+	TArray<FBoardLocation> FigsLocation;
+
+	UPROPERTY()
+	AChessPiece* ChosenPiece;
+	
 	UPROPERTY()
 	USceneComponent* URoot;
 	
-	// Sets default values for this actor's properties
-	AChessBoard();
-
-private:
 	UPROPERTY()
 	TArray<ABoardCell*> cells;
+
+	TMap<FBoardLocation, TArray<FBoardLocation>> PossibleChecks;
 	
 protected:
 	// Called when the game starts or when spawned
@@ -45,8 +62,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	bool CheckEverything(FBoardLocation MoveToLocation);
+
+	void SetChosenPiece(AChessPiece* Piece);
+	
 private:
+	void CheckForCheck(TEnumAsByte<FigureColor> Color);
+	bool CheckForMate();
+	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
+	TArray<FBoardLocation>& GetAllBlockCells();
+
+	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Side);
+	bool IsInDefendersOfKing();
+	void MakeMovesNoCheck();
+	
 	void SpawnCells();
 
 	void SpawnOnePlayerFigures();
+
 };

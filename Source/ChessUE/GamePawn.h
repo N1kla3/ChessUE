@@ -3,7 +3,7 @@
 #include "BoardCell.h"
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
-#include "ChessPiece.h"
+#include "ChessBoard.h"
 #include "GameFramework/Pawn.h"
 #include "GamePawn.generated.h"
 
@@ -33,6 +33,11 @@ protected:
 
 	UPROPERTY()
 	ABoardCell* CurrentCellFocus;
+
+	UPROPERTY()
+	AChessBoard* Board;
+
+	TArray<FBoardLocation> CurrFigureMoves;
 	
 public:
 	// Called every frame
@@ -40,13 +45,20 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
 	void ClickChessPiece();
 
 	void MoveChessPiece(float a);
 
 	void MoveFigureToCeil();
 
+	TArray<FBoardLocation>& GetOccupiedLocations();
+
 	void TraceForChessPiece(const FVector& Start, const FVector& End);
 
 	void TraceForCeil(const FVector& Start, const FVector& End);
+
+	void FindChessBoard();
+
+	void HandleChessPiece();
 };

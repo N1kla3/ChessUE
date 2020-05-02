@@ -8,7 +8,7 @@
 // Sets default values
 AChessPiece::AChessPiece()
 {
-	
+	Color = FigureColor::White;	
 }
 
 // Called when the game starts or when spawned
@@ -34,6 +34,29 @@ void AChessPiece::Init(const TCHAR* pathToModel)
 	Figure->SetupAttachment(RootComponent);
 }
 
+bool AChessPiece::IsOnBoard(int32 X, int32 Y)const
+{
+	if(X > MAXlocation && X < MINlocation)
+	{
+		return false;
+	}
+	if(Y > MAXlocation && Y < MINlocation)
+	{
+		return false;
+	}
+	return true;
+}
+
+void AChessPiece::SetColor(TEnumAsByte<FigureColor> Color)
+{
+	this->Color = Color;
+}
+
+TEnumAsByte<FigureColor> AChessPiece::GetColor() const
+{
+	return Color;
+}
+
 bool AChessPiece::CanMoveToLocation(FBoardLocation cell)
 {
 	return true;
@@ -47,6 +70,26 @@ void AChessPiece::Highlight()
 FBoardLocation AChessPiece::GetBoardLocation()
 {
 	return FBoardLocation(XBoardCoord, YBoardCoord);
+}
+
+TArray<FBoardLocation>& AChessPiece::TryForEnemyKing(FBoardLocation KingLocation)
+{
+	return AllMoves;
+}
+
+TArray<FBoardLocation>& AChessPiece::GetAllMoves()
+{
+	return AllMoves;
+}
+
+/**
+ * \brief Calculates and return all practically possible moves(Possible "Check" is not calculated)
+ * \param blockCells it is locations of figures that placed on the possible Move locations of our figure
+ * \return Moves considering other figures, but not check
+ */
+TArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+{
+	return AllMoves;
 }
 
 void AChessPiece::SetBoardLocation(FBoardLocation Location)

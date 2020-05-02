@@ -5,6 +5,7 @@
 
 #include "BoardCell.h"
 #include "Engine/Engine.h"
+#include "EngineUtils.h"
 #include "GameFramework/PlayerController.h"
 
 
@@ -47,6 +48,11 @@ void AGamePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AGamePawn::ClickChessPiece()
 {
+	if(!Board)
+	{
+		FindChessBoard();
+	}
+	
 	APlayerController* PC = Cast<APlayerController>(GetController());
 	if (PC)
 	{
@@ -57,15 +63,7 @@ void AGamePawn::ClickChessPiece()
 		if (CurrentChessPieceFocus) 
 		{
 			TraceForCeil(Start, End);
-			if (CurrentCellFocus) {
-				MoveFigureToCeil();
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
-			}
-			else
-			{
-				CurrentChessPieceFocus = nullptr;
-				CurrentCellFocus = nullptr;
-			}
+			HandleChessPiece();
 		}
 		else
 		{	
@@ -83,11 +81,15 @@ void AGamePawn::MoveChessPiece(float a)
 
 void AGamePawn::MoveFigureToCeil()
 {
-	FVector newLocation = CurrentCellFocus->GetActorLocation();
-	CurrentChessPieceFocus->SetActorLocation(newLocation+FVector(0.f, 0.f, 100.f));
-	CurrentChessPieceFocus->SetBoardLocation(CurrentCellFocus->GetBoardLocation());
+	CurrentCellFocus->DestroyPiece();
+	CurrentCellFocus->SetPiece(CurrentChessPieceFocus, CurrentChessPieceFocus->GetColor());
 	CurrentChessPieceFocus = nullptr;
 	CurrentCellFocus = nullptr;
+}
+
+TArray<FBoardLocation>& AGamePawn::GetOccupiedLocations()
+{
+	return CurrFigureMoves;
 }
 
 
@@ -121,5 +123,35 @@ void AGamePawn::TraceForCeil(const FVector& Start, const FVector& End)
 		if (CurrentCellFocus != nullptr) {
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new cell"));
 		}
+	}
+}
+
+void AGamePawn::FindChessBoard()
+{
+	for (TActorIterator<AChessBoard> Itr(GetWorld()); Itr; ++Itr) 
+	{
+		Board = Cast<AChessBoard>(*Itr);
+		if(Board)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find board"));
+			return;
+		}
+	}
+}
+
+void AGamePawn::HandleChessPiece()
+{
+	if (CurrentCellFocus) {
+		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation()))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
+			MoveFigureToCeil();
+		}
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
+	}
+	else
+	{
+		CurrentChessPieceFocus = nullptr;
+		CurrentCellFocus = nullptr;
 	}
 }

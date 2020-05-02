@@ -23,7 +23,8 @@ public:
 	UStaticMeshComponent* UCellMesh;
 
 private:
-	
+
+	UPROPERTY()
 	AChessPiece* piece = nullptr;
 	
 public:	
@@ -33,8 +34,10 @@ public:
 	ABoardCell();
 
 	void SetBoardLocation(FBoardLocation);
-	void SetPiece(AChessPiece *piece);
-
+	void SetPiece(AChessPiece *piece, TEnumAsByte<FigureColor> Color);
+	AChessPiece* GetPiece();
+	void DestroyPiece();
+	
 	FBoardLocation GetBoardLocation();
 
 protected:

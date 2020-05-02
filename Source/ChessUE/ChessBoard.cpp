@@ -9,6 +9,7 @@
 #include "King.h"
 #include "Queen.h"
 #include "ChessPawn.h"
+#include "../../../../../../../Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.25.28610/INCLUDE/stdbool.h"
 
 #include "Engine/World.h"
 
@@ -50,6 +51,9 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     ChosenPiece = Piece;
     const auto ePieceColor = Piece->GetColor();
     CheckForCheck(ePieceColor);
+
+    bIsCheckToBlack = false;
+    bIsCheckToWhite = false;
     
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
 
@@ -59,12 +63,18 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
         //can move only to cells that can defend king (compare with own possible)
     }else
     {
-        //is in defenders -> make new moves
-        //else simple moves
+        if(IsInDefendersOfKing())
+        {
+            
+        }
+        else
+        {
+            
+        }
     }
 }
 
-bool AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
+void AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
 {
     const FBoardLocation kingLocation = (Color == White ? WKingLocation : BKingLocation);
     for(auto enemyCell : cells)
@@ -82,7 +92,6 @@ bool AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
             }
         }
     }
-    return true;
 }
 
 bool AChessBoard::CheckForMate()
@@ -135,7 +144,7 @@ void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte
     {
         if(moves == KingLocation)
         {
-            bIsCheckToBlack = true;
+            Color == White ? bIsCheckToWhite = true : bIsCheckToBlack = true;
             break;
         }
         if(counter < 1)EnemyFigMoves.Add(moves);
@@ -191,4 +200,14 @@ void AChessBoard::SpawnOnePlayerFigures()
     {
         cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
     }
+}
+
+bool AChessBoard::IsInDefendersOfKing()
+{
+    return true;
+}
+
+void AChessBoard::MakeMovesNoCheck()
+{
+    
 }

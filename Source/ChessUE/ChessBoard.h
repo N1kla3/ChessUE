@@ -67,12 +67,14 @@ public:
 	void SetChosenPiece(AChessPiece* Piece);
 	
 private:
-	bool CheckForCheck(TEnumAsByte<FigureColor> Color);
+	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
 	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
 	TArray<FBoardLocation>& GetAllBlockCells();
 
 	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Side);
+	bool IsInDefendersOfKing();
+	void MakeMovesNoCheck();
 	
 	void SpawnCells();
 

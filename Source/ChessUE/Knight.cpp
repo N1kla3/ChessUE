@@ -5,7 +5,7 @@
 
 AKnight::AKnight()
 {
-	const TCHAR* pathToModel = L"/Game/Shape_Cone.Shape_Cone";
+	const TCHAR* pathToModel = TEXT("/Game/Shape_Cone.Shape_Cone");
 	Init(pathToModel);
 }
 

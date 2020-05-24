@@ -55,7 +55,7 @@ void ABoardCell::BeginPlay()
 
 void ABoardCell::InitMesh()
 {
-	const TCHAR* PathToModel = L"/Game/Shape_Cube.Shape_Cube";
+	const TCHAR* PathToModel = TEXT("/Game/Shape_Cube.Shape_Cube");
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> VisualAsset(PathToModel);
 
 	URoot = CreateDefaultSubobject<USceneComponent>(TEXT("root"));

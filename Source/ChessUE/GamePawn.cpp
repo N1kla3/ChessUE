@@ -15,8 +15,11 @@ AGamePawn::AGamePawn()
 	PScene = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 	RootComponent = PScene;
 
-	PCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
-	PCamera->SetupAttachment(RootComponent);
+	PblackCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("camera"));
+	PblackCamera->SetupAttachment(RootComponent);
+
+	PwhiteCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("whiteCamera"));
+	PwhiteCamera->SetupAttachment(RootComponent);
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
@@ -85,6 +88,15 @@ void AGamePawn::MoveFigureToCeil()
 	CurrentCellFocus->SetPiece(CurrentChessPieceFocus, CurrentChessPieceFocus->GetColor());
 	CurrentChessPieceFocus = nullptr;
 	CurrentCellFocus = nullptr;
+	if(PblackCamera->IsActive())
+	{
+		PblackCamera->SetActive(false);
+		PwhiteCamera->SetActive(true);
+	}else if(PwhiteCamera->IsActive())
+	{
+		PblackCamera->SetActive(true);
+		PwhiteCamera->SetActive(false);
+	}
 }
 
 TArray<FBoardLocation>& AGamePawn::GetOccupiedLocations()

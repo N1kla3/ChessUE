@@ -23,8 +23,11 @@ protected:
 	bool bIsCLicked;
 	
 	UPROPERTY(EditAnywhere)
-	class UCameraComponent* PCamera;
+	class UCameraComponent* PblackCamera;
 
+	UPROPERTY(EditAnywhere)
+	class UCameraComponent* PwhiteCamera;
+	
 	UPROPERTY(EditAnywhere)
 	class USceneComponent* PScene;
 

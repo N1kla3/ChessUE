@@ -88,15 +88,7 @@ void AGamePawn::MoveFigureToCeil()
 	CurrentCellFocus->SetPiece(CurrentChessPieceFocus, CurrentChessPieceFocus->GetColor());
 	CurrentChessPieceFocus = nullptr;
 	CurrentCellFocus = nullptr;
-	if(PblackCamera->IsActive())
-	{
-		PblackCamera->SetActive(false);
-		PwhiteCamera->SetActive(true);
-	}else if(PwhiteCamera->IsActive())
-	{
-		PblackCamera->SetActive(true);
-		PwhiteCamera->SetActive(false);
-	}
+	SwapPlayers();	
 }
 
 TArray<FBoardLocation>& AGamePawn::GetOccupiedLocations()
@@ -166,4 +158,18 @@ void AGamePawn::HandleChessPiece()
 		CurrentChessPieceFocus = nullptr;
 		CurrentCellFocus = nullptr;
 	}
+}
+
+void AGamePawn::SwapPlayers()
+{
+	if(PblackCamera->IsActive())
+	{
+		PblackCamera->SetActive(false);
+		PwhiteCamera->SetActive(true);
+	}else if(PwhiteCamera->IsActive())
+	{
+		PblackCamera->SetActive(true);
+		PwhiteCamera->SetActive(false);
+	}
+	CurPlayerSide == White ? CurPlayerSide = Black : CurPlayerSide = White;
 }

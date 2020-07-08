@@ -2,6 +2,7 @@
 
 #pragma once
 
+
 #include "CoreMinimal.h"
 #include "BoardCell.h"
 
@@ -78,6 +79,7 @@ private:
 	
 	void SpawnCells();
 
-	void SpawnOnePlayerFigures();
+	void SpawnBlackFigures();
+	void SpawnWhiteFigures();
 
 };

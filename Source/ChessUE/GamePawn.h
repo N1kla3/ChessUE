@@ -40,6 +40,8 @@ protected:
 	UPROPERTY()
 	AChessBoard* Board;
 
+	TEnumAsByte<FigureColor> CurPlayerSide;
+	
 	TArray<FBoardLocation> CurrFigureMoves;
 	
 public:
@@ -64,4 +66,6 @@ private:
 	void FindChessBoard();
 
 	void HandleChessPiece();
+
+	void SwapPlayers();
 };

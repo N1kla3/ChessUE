@@ -32,7 +32,8 @@ void AChessBoard::BeginPlay()
 {
     Super::BeginPlay();
     SpawnCells();
-    SpawnOnePlayerFigures();
+    SpawnBlackFigures();
+    SpawnWhiteFigures();
 }
 
 // Called every frame
@@ -182,7 +183,7 @@ void AChessBoard::SpawnCells()
     }
 }
 
-void AChessBoard::SpawnOnePlayerFigures()
+void AChessBoard::SpawnBlackFigures()
 {
     cells[0 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(), Black);
     cells[7 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(), Black);
@@ -199,6 +200,28 @@ void AChessBoard::SpawnOnePlayerFigures()
     for (int i = 0; i < ROWS; i++)
     {
         cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
+    }
+}
+
+void AChessBoard::SpawnWhiteFigures()
+{
+    cells[7]->SetPiece(GetWorld()->SpawnActor<ARook>(), White);
+    cells[47]->SetPiece(GetWorld()->SpawnActor<ARook>(), White);
+
+    cells[15]->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
+    cells[55]->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
+
+    cells[23]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
+    cells[63]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
+
+    cells[39]->SetPiece(GetWorld()->SpawnActor<AKing>(),White);
+    cells[31]->SetPiece(GetWorld()->SpawnActor<AQueen>(), White);
+
+    int8 shift = 6;
+    for (int i = 0; i < ROWS; i++)
+    {
+        cells[shift]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), White);
+        shift += 8;
     }
 }
 

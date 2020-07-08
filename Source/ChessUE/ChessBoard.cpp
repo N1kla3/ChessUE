@@ -9,7 +9,6 @@
 #include "King.h"
 #include "Queen.h"
 #include "ChessPawn.h"
-#include "../../../../../../../Program Files (x86)/Microsoft Visual Studio/2019/Community/VC/Tools/MSVC/14.25.28610/INCLUDE/stdbool.h"
 
 #include "Engine/World.h"
 
@@ -227,7 +226,11 @@ void AChessBoard::SpawnWhiteFigures()
 
 bool AChessBoard::IsInDefendersOfKing()
 {
-    return true;
+    if(PossibleChecks.Contains(ChosenPiece->GetBoardLocation()))
+    {
+        return true;
+    }
+    return false;
 }
 
 void AChessBoard::MakeMovesNoCheck()

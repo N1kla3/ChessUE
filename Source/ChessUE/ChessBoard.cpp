@@ -226,11 +226,46 @@ void AChessBoard::SpawnWhiteFigures()
 
 bool AChessBoard::IsInDefendersOfKing()
 {
-    if(PossibleChecks.Contains(ChosenPiece->GetBoardLocation()))
+    for(auto pair : PossibleChecks)
     {
-        return true;
+        for(auto i : pair.Value)
+        {
+            if(i == ChosenPiece->GetBoardLocation())
+            {
+                return true;
+            }
+        }
     }
     return false;
+}
+
+void AChessBoard::WhenDefender()
+{
+    auto temp = FigureMoves;
+    FigureMoves.Empty();
+    FBoardLocation key;
+    for(auto pair : PossibleChecks)
+    {
+        for(auto i : pair.Value)
+        {
+            if(i == ChosenPiece->GetBoardLocation())
+            {
+                key = pair.Key;
+                break;
+            }
+        }
+    }
+    TArray<FBoardLocation> local = *PossibleChecks.Find(key);
+    for(auto i : local)
+    {
+        for(auto k : temp)
+        {
+            if(k == i )
+            {
+                FigureMoves.Add(k);
+            }
+        }
+    }
 }
 
 void AChessBoard::MakeMovesNoCheck()

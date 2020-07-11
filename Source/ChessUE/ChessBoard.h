@@ -52,7 +52,7 @@ private:
 	UPROPERTY()
 	TArray<ABoardCell*> cells;
 
-	TMap<FBoardLocation, TArray<FBoardLocation>> PossibleChecks;
+	TMultiMap<FBoardLocation, TArray<FBoardLocation>> PossibleChecks;
 	
 protected:
 	// Called when the game starts or when spawned
@@ -75,11 +75,12 @@ private:
 
 	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Side);
 	bool IsInDefendersOfKing();
+	void WhenDefender();
 	void MakeMovesNoCheck();
 	
 	void SpawnCells();
 
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();
-
+	
 };

@@ -34,8 +34,7 @@ private:
 	FBoardLocation WKingLocation;
 	FBoardLocation BKingLocation;
 
-	FBoardLocation WhoBeatWhiteKing;
-	FBoardLocation WhoBeatBlackKing;
+	TArray<FBoardLocation> WhoBeatKing;
 
 	bool bIsCheckToWhite;
 	bool bIsCheckToBlack;
@@ -73,9 +72,10 @@ private:
 	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
 	TArray<FBoardLocation>& GetAllBlockCells();
 
-	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Side);
+	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation Location, TEnumAsByte<FigureColor> Side);
 	bool IsInDefendersOfKing();
 	void WhenDefender();
+	void WhenCheck();
 	void MakeMovesNoCheck();
 	
 	void SpawnCells();

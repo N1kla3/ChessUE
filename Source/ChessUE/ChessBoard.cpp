@@ -65,11 +65,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     {
         if(IsInDefendersOfKing())
         {
-            
-        }
-        else
-        {
-            
+            WhenDefender();
         }
     }
 }
@@ -84,7 +80,7 @@ void AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
             if(fig->GetColor() != Color)
             {
                 TArray<FBoardLocation> temp = fig->TryForEnemyKing(kingLocation);
-                CanBeatKing(temp, Color);
+                CanBeatKing(temp, fig->GetBoardLocation(), Color);
                 if(temp.IsValidIndex(0))
                 {
                     PossibleChecks.Add(fig->GetBoardLocation(), temp);
@@ -134,7 +130,7 @@ TArray<FBoardLocation>& AChessBoard::GetAllBlockCells()
     return FigsLocation;
 }
 
-void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte<FigureColor> Color)
+void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation Location, TEnumAsByte<FigureColor> Color)
 {
     int8 counter = 0;
     TArray<FBoardLocation> temp = EnemyFigMoves;
@@ -145,6 +141,7 @@ void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, TEnumAsByte
         if(moves == KingLocation)
         {
             Color == White ? bIsCheckToWhite = true : bIsCheckToBlack = true;
+            WhoBeatKing.Add(Location);
             break;
         }
         if(counter < 1)EnemyFigMoves.Add(moves);
@@ -263,6 +260,32 @@ void AChessBoard::WhenDefender()
             if(k == i )
             {
                 FigureMoves.Add(k);
+            }
+        }
+    }
+}
+
+void AChessBoard::WhenCheck()
+{
+    auto temp = FigureMoves;
+    FigureMoves.Empty();
+    for(auto beaters : WhoBeatKing)
+    {
+        for(auto myMoves : temp)
+        {
+            if(myMoves == beaters)
+            {
+                FigureMoves.Add(myMoves);                
+            }
+        }
+        for(auto beatersMoves : *PossibleChecks.Find(beaters))
+        {
+            for(auto myMoves : temp)
+            {
+                if(myMoves == beatersMoves)
+                {
+                    FigureMoves.Add(myMoves);
+                }
             }
         }
     }

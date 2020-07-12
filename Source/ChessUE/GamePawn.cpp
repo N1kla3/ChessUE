@@ -146,7 +146,7 @@ void AGamePawn::FindChessBoard()
 void AGamePawn::HandleChessPiece()
 {
 	if (CurrentCellFocus) {
-		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation()))
+		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation(), CurrentChessPieceFocus))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
 			MoveFigureToCeil();

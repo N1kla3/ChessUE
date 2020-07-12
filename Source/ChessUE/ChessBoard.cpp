@@ -41,9 +41,17 @@ void AChessBoard::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
-bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
+bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Piece)
 {
-    return true;
+    SetChosenPiece(Piece);
+    for(auto moves : FigureMoves)
+    {
+        if(MoveToLocation == moves)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 void AChessBoard::SetChosenPiece(AChessPiece* Piece)
@@ -54,34 +62,33 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
 
     bIsCheckToBlack = false;
     bIsCheckToWhite = false;
-    
+
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
 
     const bool bSideCheck = (ePieceColor == White ? bIsCheckToWhite : bIsCheckToBlack);
-    if(bSideCheck)
+    if (bSideCheck)
     {
-        //can move only to cells that can defend king (compare with own possible)
-    }else
+        WhenCheck();
+        //need to do something with king
+    }
+    else if (IsInDefendersOfKing())
     {
-        if(IsInDefendersOfKing())
-        {
-            WhenDefender();
-        }
+        WhenDefender();
     }
 }
 
 void AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
 {
     const FBoardLocation kingLocation = (Color == White ? WKingLocation : BKingLocation);
-    for(auto enemyCell : cells)
+    for (auto enemyCell : cells)
     {
-        if(auto fig = enemyCell->GetPiece())
+        if (auto fig = enemyCell->GetPiece())
         {
-            if(fig->GetColor() != Color)
+            if (fig->GetColor() != Color)
             {
                 TArray<FBoardLocation> temp = fig->TryForEnemyKing(kingLocation);
                 CanBeatKing(temp, fig->GetBoardLocation(), Color);
-                if(temp.IsValidIndex(0))
+                if (temp.IsValidIndex(0))
                 {
                     PossibleChecks.Add(fig->GetBoardLocation(), temp);
                 }
@@ -104,14 +111,14 @@ TArray<FBoardLocation>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> 
 {
     FigureMoves.Empty();
     GetAllBlockCells();
-    
+
     for (const auto other : FigsLocation)
     {
-        for(auto my : FigureMoves)
-        if (other.Key == my.Key && other.Value == my.Value)
-        {
-            FigureMoves.Add(my);
-        }
+        for (auto my : FigureMoves)
+            if (other.Key == my.Key && other.Value == my.Value)
+            {
+                FigureMoves.Add(my);
+            }
     }
 
     return FigureMoves;
@@ -130,34 +137,34 @@ TArray<FBoardLocation>& AChessBoard::GetAllBlockCells()
     return FigsLocation;
 }
 
-void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation Location, TEnumAsByte<FigureColor> Color)
+void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation Location,
+                              TEnumAsByte<FigureColor> Color)
 {
     int8 counter = 0;
     TArray<FBoardLocation> temp = EnemyFigMoves;
     EnemyFigMoves.Empty();
     const auto KingLocation = (Color == White ? WKingLocation : BKingLocation);
-    for(auto moves : temp)
+    for (auto moves : temp)
     {
-        if(moves == KingLocation)
+        if (moves == KingLocation)
         {
             Color == White ? bIsCheckToWhite = true : bIsCheckToBlack = true;
             WhoBeatKing.Add(Location);
             break;
         }
-        if(counter < 1)EnemyFigMoves.Add(moves);
-        for(auto figs : FigsLocation)
+        if (counter < 1)EnemyFigMoves.Add(moves);
+        for (auto figs : FigsLocation)
         {
-            if(figs == moves)
+            if (figs == moves)
             {
-                
                 counter++;
                 break;
             }
         }
-        if(counter > 1)
+        if (counter > 1)
         {
             EnemyFigMoves.Empty();
-            return;       
+            return;
         }
     }
 }
@@ -210,7 +217,7 @@ void AChessBoard::SpawnWhiteFigures()
     cells[23]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
     cells[63]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
 
-    cells[39]->SetPiece(GetWorld()->SpawnActor<AKing>(),White);
+    cells[39]->SetPiece(GetWorld()->SpawnActor<AKing>(), White);
     cells[31]->SetPiece(GetWorld()->SpawnActor<AQueen>(), White);
 
     int8 shift = 6;
@@ -223,11 +230,11 @@ void AChessBoard::SpawnWhiteFigures()
 
 bool AChessBoard::IsInDefendersOfKing()
 {
-    for(auto pair : PossibleChecks)
+    for (auto pair : PossibleChecks)
     {
-        for(auto i : pair.Value)
+        for (auto i : pair.Value)
         {
-            if(i == ChosenPiece->GetBoardLocation())
+            if (i == ChosenPiece->GetBoardLocation())
             {
                 return true;
             }
@@ -241,11 +248,11 @@ void AChessBoard::WhenDefender()
     auto temp = FigureMoves;
     FigureMoves.Empty();
     FBoardLocation key;
-    for(auto pair : PossibleChecks)
+    for (auto pair : PossibleChecks)
     {
-        for(auto i : pair.Value)
+        for (auto i : pair.Value)
         {
-            if(i == ChosenPiece->GetBoardLocation())
+            if (i == ChosenPiece->GetBoardLocation())
             {
                 key = pair.Key;
                 break;
@@ -253,11 +260,11 @@ void AChessBoard::WhenDefender()
         }
     }
     TArray<FBoardLocation> local = *PossibleChecks.Find(key);
-    for(auto i : local)
+    for (auto i : local)
     {
-        for(auto k : temp)
+        for (auto k : temp)
         {
-            if(k == i )
+            if (k == i)
             {
                 FigureMoves.Add(k);
             }
@@ -269,20 +276,20 @@ void AChessBoard::WhenCheck()
 {
     auto temp = FigureMoves;
     FigureMoves.Empty();
-    for(auto beaters : WhoBeatKing)
+    for (auto beaters : WhoBeatKing)
     {
-        for(auto myMoves : temp)
+        for (auto myMoves : temp)
         {
-            if(myMoves == beaters)
+            if (myMoves == beaters)
             {
-                FigureMoves.Add(myMoves);                
+                FigureMoves.Add(myMoves);
             }
         }
-        for(auto beatersMoves : *PossibleChecks.Find(beaters))
+        for (auto beatersMoves : *PossibleChecks.Find(beaters))
         {
-            for(auto myMoves : temp)
+            for (auto myMoves : temp)
             {
-                if(myMoves == beatersMoves)
+                if (myMoves == beatersMoves)
                 {
                     FigureMoves.Add(myMoves);
                 }
@@ -293,5 +300,4 @@ void AChessBoard::WhenCheck()
 
 void AChessBoard::MakeMovesNoCheck()
 {
-    
 }

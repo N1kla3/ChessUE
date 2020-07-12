@@ -62,8 +62,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	bool CheckEverything(FBoardLocation MoveToLocation);
-
+	bool CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Piece);
+	/**
+	 * write to FigureMoves only possible moves(finish calculation) of figure
+	 */
 	void SetChosenPiece(AChessPiece* Piece);
 	
 private:

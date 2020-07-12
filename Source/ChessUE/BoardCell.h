@@ -39,6 +39,8 @@ public:
 	void DestroyPiece();
 	
 	FBoardLocation GetBoardLocation();
+	void SwapBetweenColors();
+	void InitColor(TEnumAsByte<FigureColor> Color);
 
 protected:
 	// Called when the game starts or when spawned
@@ -51,6 +53,12 @@ private:
 	UPROPERTY()
 	int32 Ycoord;
 
+	UPROPERTY()
+	UMaterialInterface* M_White;
+	UPROPERTY()
+	UMaterialInterface* M_Black;
+	UPROPERTY()
+	UMaterialInterface* M_Green;
 private:
 	void InitMesh();
 

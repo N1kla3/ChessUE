@@ -181,6 +181,7 @@ void AChessBoard::SpawnCells()
             FVector spawnLocation = curActorLocation + FVector(Space * i, Space * k, 0.f);
             ABoardCell* cell = GetWorld()->SpawnActor<ABoardCell>(spawnLocation, rotation);
             cell->SetBoardLocation(FBoardLocation(i, k));
+            cell->InitColor(Black);
             cells.Add(cell);
         }
     }

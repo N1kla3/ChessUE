@@ -21,6 +21,8 @@ AGamePawn::AGamePawn()
 	PwhiteCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("whiteCamera"));
 	PwhiteCamera->SetupAttachment(RootComponent);
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
+	CurPlayerSide = White;
 }
 
 
@@ -108,10 +110,11 @@ void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 
 		if(CurrentChessPieceFocus != HitPiece)
 		{
-		
-			CurrentChessPieceFocus = HitPiece;
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new"));
-			
+			if(CurPlayerSide == HitPiece->GetColor())
+			{
+				CurrentChessPieceFocus = HitPiece;
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new"));
+			}else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("another color"));
 		}
 	}
 }

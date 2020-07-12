@@ -12,6 +12,26 @@ ABoardCell::ABoardCell()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	InitMesh();
+	static ConstructorHelpers::FObjectFinder<UMaterial>Material(TEXT("Material'/Game/M_Tech_Hex_Tile.M_Tech_Hex_Tile'"));
+	if (Material.Succeeded())
+	{
+		M_White = UMaterialInstanceDynamic::Create(Material.Object, Material.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UMaterial>Material1(TEXT("Material'/Game/M_Wood_Pine.M_Wood_Pine'"));
+	if (Material1.Succeeded())
+	{
+		M_Black = UMaterialInstanceDynamic::Create(Material1.Object, Material1.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<UMaterial>Material2(TEXT("Material'/Game/M_Ground_Moss.M_Ground_Moss'"));
+	if (Material2.Succeeded())
+	{
+		M_Green = UMaterialInstanceDynamic::Create(Material2.Object, Material2.Object);
+	}
+}
+
+void ABoardCell::InitColor(TEnumAsByte<FigureColor> Color)
+{
+	Color == White ? UCellMesh->SetMaterial(0, M_White):UCellMesh->SetMaterial(0, M_Black);	
 }
 
 void ABoardCell::SetBoardLocation(FBoardLocation newLocation)
@@ -44,6 +64,11 @@ void ABoardCell::DestroyPiece()
 FBoardLocation ABoardCell::GetBoardLocation()
 {
 	return FBoardLocation(Xcoord, Ycoord);
+}
+
+void ABoardCell::SwapBetweenColors()
+{
+	
 }
 
 

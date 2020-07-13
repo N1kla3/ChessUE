@@ -15,7 +15,8 @@ class CHESSUE_API ABishop : public AChessPiece
 	GENERATED_BODY()
 public:
 	ABishop();
-
+	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation)override;
+	
 	virtual bool CanMoveToLocation(FBoardLocation cell) override;
 
 	virtual TArray<FBoardLocation>& GetAllMoves() override;

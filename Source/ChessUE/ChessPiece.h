@@ -45,7 +45,7 @@ protected:
 	 * Array that keeps all possible moves of figure, independently of other figures locations
 	 */
 	TArray<FBoardLocation> AllMoves;
-	
+	TArray<FBoardLocation> KingTrier;
 
 public:
 	virtual bool CanMoveToLocation(FBoardLocation cell);
@@ -57,6 +57,7 @@ public:
 
 	/**
 	 * \brief If it theoretically possible to beat a king, return a path from figure to enemy King
+	 * otherwise return empty
 	 * \param KingLocation 
 	 * \return that path FROM figure TO king!!!
 	 */

@@ -216,10 +216,10 @@ void AChessBoard::SpawnBlackFigures()
     cells[3 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKing>(), Black);
     cells[4 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AQueen>(), Black);
 
-    for (int i = 0; i < ROWS; i++)
+    /*for (int i = 0; i < ROWS; i++)
     {
         cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
-    }
+    }*/
 }
 
 void AChessBoard::SpawnWhiteFigures()
@@ -236,12 +236,12 @@ void AChessBoard::SpawnWhiteFigures()
     cells[39]->SetPiece(GetWorld()->SpawnActor<AKing>(), White);
     cells[31]->SetPiece(GetWorld()->SpawnActor<AQueen>(), White);
 
-    int8 shift = 6;
+    /*int8 shift = 6;
     for (int i = 0; i < ROWS; i++)
     {
         cells[shift]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), White);
         shift += 8;
-    }
+    }*/
 }
 
 bool AChessBoard::IsInDefendersOfKing()

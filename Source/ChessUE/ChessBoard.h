@@ -81,7 +81,8 @@ private:
 	void MakeMovesNoCheck();
 	
 	void SpawnCells();
-
+	void HighlightCells();
+	
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();
 	

@@ -53,6 +53,9 @@ private:
 	UPROPERTY()
 	int32 Ycoord;
 
+	TEnumAsByte<FigureColor> Color;
+	bool IsColorChanger;
+
 	UPROPERTY()
 	UMaterialInterface* M_White;
 	UPROPERTY()

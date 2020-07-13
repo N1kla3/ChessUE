@@ -51,6 +51,7 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Pi
             return true;
         }
     }
+    HighlightCells();
     return false;
 }
 
@@ -183,6 +184,20 @@ void AChessBoard::SpawnCells()
             cell->SetBoardLocation(FBoardLocation(i, k));
             cell->InitColor(Black);
             cells.Add(cell);
+        }
+    }
+}
+
+void AChessBoard::HighlightCells()
+{
+    for(auto moves : FigureMoves)
+    {
+        for(auto cell : cells)
+        {
+            if(moves == cell->GetBoardLocation())
+            {
+                cell->SwapBetweenColors();
+            }
         }
     }
 }

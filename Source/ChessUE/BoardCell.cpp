@@ -31,6 +31,7 @@ ABoardCell::ABoardCell()
 
 void ABoardCell::InitColor(TEnumAsByte<FigureColor> Color)
 {
+	this->Color = Color;
 	Color == White ? UCellMesh->SetMaterial(0, M_White):UCellMesh->SetMaterial(0, M_Black);	
 }
 
@@ -68,7 +69,15 @@ FBoardLocation ABoardCell::GetBoardLocation()
 
 void ABoardCell::SwapBetweenColors()
 {
-	
+	if(IsColorChanger)
+	{
+		UCellMesh->SetMaterial(0, M_Green);
+		IsColorChanger = false;
+	}else
+	{
+		Color == White ? UCellMesh->SetMaterial(0, M_White):UCellMesh->SetMaterial(0, M_Black);
+		IsColorChanger = true;
+	}
 }
 
 
@@ -92,6 +101,7 @@ void ABoardCell::InitMesh()
 		UCellMesh->SetStaticMesh(VisualAsset.Object);
 	}
 	UCellMesh->SetupAttachment(RootComponent);
+	IsColorChanger = false;
 }
 
 // Called every frame

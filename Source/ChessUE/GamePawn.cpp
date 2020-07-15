@@ -113,6 +113,7 @@ void AGamePawn::TraceForChessPiece(const FVector& Start, const FVector& End)
 			if(CurPlayerSide == HitPiece->GetColor())
 			{
 				CurrentChessPieceFocus = HitPiece;
+				Board->SetChosenPiece(CurrentChessPieceFocus);
 				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("find new"));
 			}else GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("another color"));
 		}
@@ -153,8 +154,8 @@ void AGamePawn::HandleChessPiece()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
 			MoveFigureToCeil();
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 	}
 	else
 	{

@@ -43,7 +43,6 @@ void AChessBoard::Tick(float DeltaTime)
 
 bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Piece)
 {
-    SetChosenPiece(Piece);
     for(auto moves : FigureMoves)
     {
         if(MoveToLocation == moves)
@@ -51,7 +50,6 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Pi
             return true;
         }
     }
-    HighlightCells();
     return false;
 }
 
@@ -76,6 +74,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     {
         WhenDefender();
     }
+    HighlightCells();
 }
 
 void AChessBoard::CheckForCheck(TEnumAsByte<FigureColor> Color)
@@ -182,7 +181,8 @@ void AChessBoard::SpawnCells()
             FVector spawnLocation = curActorLocation + FVector(Space * i, Space * k, 0.f);
             ABoardCell* cell = GetWorld()->SpawnActor<ABoardCell>(spawnLocation, rotation);
             cell->SetBoardLocation(FBoardLocation(i, k));
-            cell->InitColor(Black);
+            if((i+k) % 2 == 0)cell->InitColor(Black);
+            else cell->InitColor(White);
             cells.Add(cell);
         }
     }
@@ -220,6 +220,7 @@ void AChessBoard::SpawnBlackFigures()
     {
         cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
     }*/
+    BKingLocation = FBoardLocation(1,1);
 }
 
 void AChessBoard::SpawnWhiteFigures()
@@ -242,6 +243,7 @@ void AChessBoard::SpawnWhiteFigures()
         cells[shift]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), White);
         shift += 8;
     }*/
+    WKingLocation = FBoardLocation(3,3);
 }
 
 bool AChessBoard::IsInDefendersOfKing()

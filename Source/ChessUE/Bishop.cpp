@@ -3,6 +3,7 @@
 
 #include "Bishop.h"
 #include "Components/StaticMeshComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 ABishop::ABishop()
     : AChessPiece()
@@ -50,13 +51,14 @@ TArray<FBoardLocation>& ABishop::GetAllMoves()
     for (size_t i = MINlocation; i <= MAXlocation; ++i)
     {
         if (i == XBoardCoord)continue;
-        if (IsOnBoard(i, YBoardCoord - i))
+        const int32 Difference = UKismetMathLibrary::Abs_Int(i - XBoardCoord);
+        if (IsOnBoard(i, YBoardCoord - Difference))
         {
-            AllMoves.Emplace(i, YBoardCoord - i);
+            AllMoves.Emplace(i, YBoardCoord - Difference);
         }
-        if (IsOnBoard(i, YBoardCoord + i))
+        if (IsOnBoard(i, YBoardCoord + Difference))
         {
-            AllMoves.Emplace(i, YBoardCoord + i);
+            AllMoves.Emplace(i, YBoardCoord + Difference);
         }
     }
     return AllMoves;

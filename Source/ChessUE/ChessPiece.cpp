@@ -36,11 +36,11 @@ void AChessPiece::Init(const TCHAR* pathToModel)
 
 bool AChessPiece::IsOnBoard(int32 X, int32 Y)const
 {
-	if(X > MAXlocation && X < MINlocation)
+	if(X > MAXlocation || X < MINlocation)
 	{
 		return false;
 	}
-	if(Y > MAXlocation && Y < MINlocation)
+	if(Y > MAXlocation || Y < MINlocation)
 	{
 		return false;
 	}

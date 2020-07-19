@@ -27,6 +27,7 @@ ABoardCell::ABoardCell()
 	{
 		M_Green = UMaterialInstanceDynamic::Create(Material2.Object, Material2.Object);
 	}
+	IsColorChanger = true;
 }
 
 void ABoardCell::InitColor(TEnumAsByte<FigureColor> Color)

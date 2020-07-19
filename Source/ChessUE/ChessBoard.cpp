@@ -220,7 +220,7 @@ void AChessBoard::SpawnBlackFigures()
     {
         cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
     }*/
-    BKingLocation = FBoardLocation(1,1);
+    BKingLocation = FBoardLocation(5,1);
 }
 
 void AChessBoard::SpawnWhiteFigures()
@@ -243,7 +243,7 @@ void AChessBoard::SpawnWhiteFigures()
         cells[shift]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), White);
         shift += 8;
     }*/
-    WKingLocation = FBoardLocation(3,3);
+    WKingLocation = FBoardLocation(5,8);
 }
 
 bool AChessBoard::IsInDefendersOfKing()

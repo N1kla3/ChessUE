@@ -41,6 +41,7 @@ private:
 
 	TArray<FBoardLocation> FigureMoves;
 	TArray<FBoardLocation> FigsLocation;
+	TArray<FBoardLocation> BlockedForFigure;
 
 	UPROPERTY()
 	AChessPiece* ChosenPiece;

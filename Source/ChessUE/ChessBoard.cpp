@@ -109,19 +109,19 @@ bool AChessBoard::CheckForMate()
  */
 TArray<FBoardLocation>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves)
 {
-    FigureMoves.Empty();
     GetAllBlockCells();
-
+    BlockedForFigure.Empty();
+    
     for (const auto other : FigsLocation)
     {
         for (auto my : FigureMoves)
             if (other.Key == my.Key && other.Value == my.Value)
             {
-                FigureMoves.Add(my);
+                BlockedForFigure.Add(my);
             }
     }
 
-    return FigureMoves;
+    return BlockedForFigure;
 }
 
 TArray<FBoardLocation>& AChessBoard::GetAllBlockCells()

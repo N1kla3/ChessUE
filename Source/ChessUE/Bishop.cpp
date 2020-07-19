@@ -70,67 +70,69 @@ TArray<FBoardLocation>& ABishop::GetCorrectMoves(TArray<FBoardLocation>& blockCe
 
     bool oneSide = true, secSide = true;
 
-    for (size_t i = XBoardCoord + 1; i <= MAXlocation; i++)
+    for (int8 i = XBoardCoord + 1; i <= MAXlocation; i++)
     {
+        const int8 Diff = abs(i-XBoardCoord);
         if (oneSide)
         {
             for (auto k : blockCells)
             {
-                if (k.Key == i && k.Value == YBoardCoord - i)
+                if (k.Key == i && k.Value == YBoardCoord - Diff)
                 {
                     oneSide = false;
                 }
             }
-            if (IsOnBoard(i, YBoardCoord - i) && oneSide)
+            if (IsOnBoard(i, YBoardCoord - Diff) && oneSide)
             {
-                temp.Emplace(i, YBoardCoord - i);
+                temp.Emplace(i, YBoardCoord - Diff);
             }
         }
         if (secSide)
         {
             for (auto k : blockCells)
             {
-                if (k.Key == i && k.Value == YBoardCoord + i)
+                if (k.Key == i && k.Value == YBoardCoord + Diff)
                 {
                     secSide = false;
                 }
             }
-            if (IsOnBoard(i, YBoardCoord + i) && secSide)
+            if (IsOnBoard(i, YBoardCoord + Diff) && secSide)
             {
-                temp.Emplace(i, YBoardCoord + i);
+                temp.Emplace(i, YBoardCoord + Diff);
             }
         }
     }
     oneSide = true, secSide = true;
 
-    for (size_t i = XBoardCoord - 1; i > 0; i--)
+    for (int8 i = XBoardCoord - 1; i > 0; i--)
     {
+        const int8 Diff = abs(i-XBoardCoord);
         if (oneSide)
         {
             for (auto k : blockCells)
             {
-                if (k.Key == i && k.Value == YBoardCoord - i)
+                if (k.Key == i && k.Value == YBoardCoord - Diff)
                 {
                     oneSide = false;
                 }
             }
-            if (IsOnBoard(i, YBoardCoord - i) && oneSide)
+            if (IsOnBoard(i, YBoardCoord - Diff) && oneSide)
             {
-                temp.Emplace(i, YBoardCoord - i);
+                temp.Emplace(i, YBoardCoord - Diff);
             }
         }
         if (secSide)
         {
             for (auto k : blockCells)
             {
-                if (k.Key == i && k.Value == YBoardCoord + i)
+                if (k.Key == i && k.Value == YBoardCoord + Diff)
                 {
                     secSide = false;
                 }
             }
-            if (IsOnBoard(i, YBoardCoord + i) && secSide)
+            if (IsOnBoard(i, YBoardCoord + Diff) && secSide)
             {
-                temp.Emplace(i, YBoardCoord + i);
+                temp.Emplace(i, YBoardCoord + Diff);
             }
         }
     }

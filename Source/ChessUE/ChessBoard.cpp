@@ -226,13 +226,13 @@ void AChessBoard::SpawnBlackFigures()
 void AChessBoard::SpawnWhiteFigures()
 {
     cells[7]->SetPiece(GetWorld()->SpawnActor<ARook>(), White);
-    cells[47]->SetPiece(GetWorld()->SpawnActor<ARook>(), White);
+    cells[63]->SetPiece(GetWorld()->SpawnActor<ARook>(), White);
 
     cells[15]->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
     cells[55]->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
 
     cells[23]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
-    cells[63]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
+    cells[47]->SetPiece(GetWorld()->SpawnActor<ABishop>(), White);
 
     cells[39]->SetPiece(GetWorld()->SpawnActor<AKing>(), White);
     cells[31]->SetPiece(GetWorld()->SpawnActor<AQueen>(), White);

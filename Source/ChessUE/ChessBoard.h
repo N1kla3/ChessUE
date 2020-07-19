@@ -68,7 +68,7 @@ public:
 	 * write to FigureMoves only possible moves(finish calculation) of figure
 	 */
 	void SetChosenPiece(AChessPiece* Piece);
-	
+	void HighlightCells();
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
@@ -82,7 +82,6 @@ private:
 	void MakeMovesNoCheck();
 	
 	void SpawnCells();
-	void HighlightCells();
 	
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();

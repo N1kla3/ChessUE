@@ -155,7 +155,13 @@ void AGamePawn::HandleChessPiece()
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
 			MoveFigureToCeil();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
+		}else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("declined"));
+			CurrentChessPieceFocus = nullptr;
+			CurrentCellFocus = nullptr;	
 		}
+		Board->HighlightCells();
 	}
 	else
 	{

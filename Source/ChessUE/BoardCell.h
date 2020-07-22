@@ -37,6 +37,7 @@ public:
 	void SetPiece(AChessPiece *piece, TEnumAsByte<FigureColor> Color);
 	AChessPiece* GetPiece();
 	void DestroyPiece();
+	void MoveOutPiece();
 	
 	FBoardLocation GetBoardLocation();
 	void SwapBetweenColors();

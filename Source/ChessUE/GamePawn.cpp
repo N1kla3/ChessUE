@@ -150,7 +150,7 @@ void AGamePawn::FindChessBoard()
 void AGamePawn::HandleChessPiece()
 {
 	if (CurrentCellFocus) {
-		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation(), CurrentChessPieceFocus))
+		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation()))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
 			MoveFigureToCeil();
@@ -161,13 +161,13 @@ void AGamePawn::HandleChessPiece()
 			CurrentChessPieceFocus = nullptr;
 			CurrentCellFocus = nullptr;	
 		}
-		Board->HighlightCells();
 	}
 	else
 	{
 		CurrentChessPieceFocus = nullptr;
 		CurrentCellFocus = nullptr;
 	}
+	Board->HighlightCells();
 }
 
 void AGamePawn::SwapPlayers()

@@ -41,12 +41,13 @@ void AChessBoard::Tick(float DeltaTime)
     Super::Tick(DeltaTime);
 }
 
-bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Piece)
+bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
 {
     for(auto moves : FigureMoves)
     {
         if(MoveToLocation == moves)
         {
+            ClearCell(ChosenPiece->GetBoardLocation());
             return true;
         }
     }
@@ -59,7 +60,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     const auto ePieceColor = Piece->GetColor();
     CheckForCheck(ePieceColor);
 
-    bIsCheckToBlack = false;
+    bIsCheckToBlack = false;//incorrect position now for debug
     bIsCheckToWhite = false;
 
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
@@ -114,7 +115,7 @@ TArray<FBoardLocation>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> 
     
     for (const auto other : FigsLocation)
     {
-        for (auto my : FigureMoves)
+        for (auto my : AllMoves)
             if (other.Key == my.Key && other.Value == my.Value)
             {
                 BlockedForFigure.Add(my);
@@ -185,6 +186,17 @@ void AChessBoard::SpawnCells()
             else cell->InitColor(White);
             cells.Add(cell);
         }
+    }
+}
+
+void AChessBoard::ClearCell(const FBoardLocation Location)
+{
+    for(auto cell : cells)
+    {
+        if(cell->GetBoardLocation() == Location)
+        {
+            cell->MoveOutPiece();
+        }    
     }
 }
 

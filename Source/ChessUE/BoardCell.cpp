@@ -63,6 +63,11 @@ void ABoardCell::DestroyPiece()
 	}
 }
 
+void ABoardCell::MoveOutPiece()
+{
+	piece = nullptr;
+}
+
 FBoardLocation ABoardCell::GetBoardLocation()
 {
 	return FBoardLocation(Xcoord, Ycoord);

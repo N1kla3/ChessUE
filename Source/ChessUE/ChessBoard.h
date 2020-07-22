@@ -63,7 +63,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	bool CheckEverything(FBoardLocation MoveToLocation, AChessPiece* Piece);
+	bool CheckEverything(FBoardLocation MoveToLocation);
 	/**
 	 * write to FigureMoves only possible moves(finish calculation) of figure
 	 */
@@ -82,6 +82,7 @@ private:
 	void MakeMovesNoCheck();
 	
 	void SpawnCells();
+	void ClearCell(const FBoardLocation Location);
 	
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();

@@ -66,7 +66,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
 
     const bool bSideCheck = (ePieceColor == White ? bIsCheckToWhite : bIsCheckToBlack);
-    if (bSideCheck)
+    /*if (bSideCheck)
     {
         WhenCheck();
         //need to do something with king
@@ -74,7 +74,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     else if (IsInDefendersOfKing())
     {
         WhenDefender();
-    }
+    }*/
     HighlightCells();
 }
 

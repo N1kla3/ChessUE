@@ -2,6 +2,9 @@
 
 
 #include "Rook.h"
+
+#include <utility>
+
 #include "Components/StaticMeshComponent.h"
 
 ARook::ARook()
@@ -49,7 +52,7 @@ TArray<FBoardLocation>& ARook::GetAllMoves()
 	for(int8 y = 1; y <= MAXlocation; ++y)
 	{
 		if(y == YBoardCoord)continue;
-		AllMoves.Emplace(y, XBoardCoord);
+		AllMoves.Emplace(XBoardCoord, y);
 	}
 	return AllMoves;
 }
@@ -57,6 +60,44 @@ TArray<FBoardLocation>& ARook::GetAllMoves()
 TArray<FBoardLocation>& ARook::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
 {
 	AllMoves.Empty();
+	for(int8 i = XBoardCoord+1; i <= MAXlocation; ++i)
+	{
+		if(GoThroughLine(i, YBoardCoord, blockCells))break;
+	}
+	for(int8 i = XBoardCoord-1; i >= MINlocation; --i)
+	{
+		if(GoThroughLine(i, YBoardCoord, blockCells))break;
+	}
+	for(int8 i = YBoardCoord+1; i <= MAXlocation; ++i)
+	{
+		if(GoThroughLine(XBoardCoord, i, blockCells))break;
+	}
+	for(int8 i = YBoardCoord-1; i >= MINlocation; --i)
+	{
+		if(GoThroughLine(XBoardCoord, i, blockCells))break;
+	}
 	return AllMoves;
+}
+
+bool ARook::GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocation>& BlockCells)
+{
+	if(IsOnBoard(X, Y))
+	{
+		bool IsInclude = true;
+		for(auto cell : BlockCells)
+		{
+			if(cell == FBoardLocation(X, Y))
+			{
+				IsInclude = false;
+				break;
+			}
+		}
+		if(IsInclude)
+		{
+			AllMoves.Emplace(X, Y);
+			return false;
+		}
+	}
+	return true;
 }
 

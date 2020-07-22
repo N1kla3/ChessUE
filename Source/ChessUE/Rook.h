@@ -16,7 +16,11 @@ class CHESSUE_API ARook : public AChessPiece
 
 public:
 	ARook();
-
+	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation)override;
+	
 	virtual bool CanMoveToLocation(FBoardLocation)override;
 
+	virtual TArray<FBoardLocation>& GetAllMoves()override;
+
+	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation>& blockCells)override;
 };

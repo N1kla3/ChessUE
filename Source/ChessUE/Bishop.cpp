@@ -2,8 +2,6 @@
 
 
 #include "Bishop.h"
-#include "Components/StaticMeshComponent.h"
-#include "Kismet/KismetMathLibrary.h"
 
 ABishop::ABishop()
     : AChessPiece()
@@ -48,95 +46,59 @@ TArray<FBoardLocation>& ABishop::GetAllMoves()
 {
     AllMoves.Empty();
 
-    for (size_t i = MINlocation; i <= MAXlocation; ++i)
+    for (int8 i = MINlocation; i <= MAXlocation; ++i)
     {
         if (i == XBoardCoord)continue;
-        const int32 Difference = UKismetMathLibrary::Abs_Int(i - XBoardCoord);
-        if (IsOnBoard(i, YBoardCoord - Difference))
-        {
-            AllMoves.Emplace(i, YBoardCoord - Difference);
-        }
-        if (IsOnBoard(i, YBoardCoord + Difference))
-        {
-            AllMoves.Emplace(i, YBoardCoord + Difference);
-        }
+        const int8 Difference = abs(i - XBoardCoord);
+        GoDiagonal(i, -Difference);
+        GoDiagonal(i, Difference);
     }
     return AllMoves;
 }
 
 TArray<FBoardLocation>& ABishop::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
 {
-    TArray<FBoardLocation> temp;
+    AllMoves.Empty();
 
     bool oneSide = true, secSide = true;
 
     for (int8 i = XBoardCoord + 1; i <= MAXlocation; i++)
     {
         const int8 Diff = abs(i-XBoardCoord);
-        if (oneSide)
-        {
-            for (auto k : blockCells)
-            {
-                if (k.Key == i && k.Value == YBoardCoord - Diff)
-                {
-                    oneSide = false;
-                }
-            }
-            if (IsOnBoard(i, YBoardCoord - Diff) && oneSide)
-            {
-                temp.Emplace(i, YBoardCoord - Diff);
-            }
-        }
-        if (secSide)
-        {
-            for (auto k : blockCells)
-            {
-                if (k.Key == i && k.Value == YBoardCoord + Diff)
-                {
-                    secSide = false;
-                }
-            }
-            if (IsOnBoard(i, YBoardCoord + Diff) && secSide)
-            {
-                temp.Emplace(i, YBoardCoord + Diff);
-            }
-        }
+        oneSide = GoThrowDiagonal(i, oneSide, blockCells, -Diff);
+        secSide = GoThrowDiagonal(i, secSide, blockCells, Diff);
     }
     oneSide = true, secSide = true;
 
     for (int8 i = XBoardCoord - 1; i > 0; i--)
     {
         const int8 Diff = abs(i-XBoardCoord);
-        if (oneSide)
-        {
-            for (auto k : blockCells)
-            {
-                if (k.Key == i && k.Value == YBoardCoord - Diff)
-                {
-                    oneSide = false;
-                }
-            }
-            if (IsOnBoard(i, YBoardCoord - Diff) && oneSide)
-            {
-                temp.Emplace(i, YBoardCoord - Diff);
-            }
-        }
-        if (secSide)
-        {
-            for (auto k : blockCells)
-            {
-                if (k.Key == i && k.Value == YBoardCoord + Diff)
-                {
-                    secSide = false;
-                }
-            }
-            if (IsOnBoard(i, YBoardCoord + Diff) && secSide)
-            {
-                temp.Emplace(i, YBoardCoord + Diff);
-            }
-        }
+        oneSide = GoThrowDiagonal(i, oneSide, blockCells, -Diff);
+        secSide = GoThrowDiagonal(i, secSide, blockCells, Diff);
     }
-    AllMoves = temp;
-
     return AllMoves;
+}
+
+void ABishop::GoDiagonal(const int8 Index, const int8 Diff, bool Side)
+{
+    if (IsOnBoard(Index, YBoardCoord + Diff) && Side)
+    {
+        AllMoves.Emplace(Index, YBoardCoord + Diff);
+    }
+}
+
+bool ABishop::GoThrowDiagonal(const int8 Index, bool Side, TArray<FBoardLocation>& BlockCells, const int8 Diff)
+{
+    if (Side)
+    {
+        for (const auto Cell : BlockCells)
+        {
+            if (Cell.Key == Index && Cell.Value == YBoardCoord + Diff)
+            {
+                Side = false;
+            }
+        }
+        GoDiagonal(Index, Diff, Side);
+    }
+    return Side;
 }

@@ -15,6 +15,7 @@ class CHESSUE_API ABishop : public AChessPiece
 	GENERATED_BODY()
 public:
 	ABishop();
+	explicit ABishop(const TCHAR* Path);
 	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation)override;
 	
 	virtual bool CanMoveToLocation(FBoardLocation cell) override;
@@ -22,7 +23,7 @@ public:
 	virtual TArray<FBoardLocation>& GetAllMoves() override;
 
 	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation>& blockCells) override;
-private:
+protected:
 	void GoDiagonal(const int8 Index, const int8 Diff, bool Side = true);
 	bool GoThrowDiagonal(const int8 Index, bool Side, TArray<FBoardLocation>& BlockCells, const int8 Diff);
 };

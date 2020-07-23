@@ -104,3 +104,24 @@ void AChessPiece::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+bool AChessPiece::GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocation>& BlockCells)
+{
+	if(IsOnBoard(X, Y))
+	{
+		bool IsInclude = true;
+		for(auto cell : BlockCells)
+		{
+			if(cell == FBoardLocation(X, Y))
+			{
+				IsInclude = false;
+				break;
+			}
+		}
+		if(IsInclude)
+		{
+			AllMoves.Emplace(X, Y);
+			return false;
+		}
+	}
+	return true;
+}

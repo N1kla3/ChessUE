@@ -10,6 +10,12 @@ ABishop::ABishop()
     Init(pathToModel);
 }
 
+ABishop::ABishop(const TCHAR* Path)
+    :AChessPiece()
+{
+    Init(Path);
+}
+
 TArray<FBoardLocation>& ABishop::TryForEnemyKing(FBoardLocation KingLocation)
 {
     KingTrier.Empty();

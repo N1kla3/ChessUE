@@ -23,6 +23,4 @@ public:
 	virtual TArray<FBoardLocation>& GetAllMoves()override;
 
 	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation>& blockCells)override;
-private:
-	bool GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocation>& BlockCells);	
 };

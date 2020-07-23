@@ -76,4 +76,5 @@ protected:
 
 	bool IsOnBoard(int32 X, int32 Y)const;
 
+    bool GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocation>& BlockCells);
 };

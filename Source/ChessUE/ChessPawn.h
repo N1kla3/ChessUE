@@ -16,6 +16,13 @@ class CHESSUE_API AChessPawn : public AChessPiece
 
 public:
 	AChessPawn();
-
+	virtual TArray<FBoardLocation>& GetAllMoves() override;
+	
 	virtual bool CanMoveToLocation(FBoardLocation cell) override;
+
+	bool IsFirstMove();
+private:
+	bool bIsFirstMove;
+
+	void AllMovesWithoutColor(int8 Navigation);
 };

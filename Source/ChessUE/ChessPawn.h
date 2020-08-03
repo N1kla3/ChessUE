@@ -20,6 +20,10 @@ public:
 	
 	virtual bool CanMoveToLocation(FBoardLocation cell) override;
 
+	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation) override;
+
+	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation>& blockCells) override;
+
 	bool IsFirstMove();
 private:
 	bool bIsFirstMove;

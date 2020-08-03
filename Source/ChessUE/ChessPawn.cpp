@@ -22,12 +22,36 @@ TArray<FBoardLocation>& AChessPawn::GetAllMoves()
 	{
 		AllMovesWithoutColor(-1);
 	}
+	return AllMoves;
 }
 
 bool AChessPawn::CanMoveToLocation(FBoardLocation cell)
 {
 	return true;
 }
+
+TArray<FBoardLocation>& AChessPawn::TryForEnemyKing(FBoardLocation KingLocation)
+{
+	KingTrier.Empty();
+	if(Color == White)
+	{
+		if(IsOnBoard(XBoardCoord-1, YBoardCoord+1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord+1);
+		if(IsOnBoard(XBoardCoord-1, YBoardCoord+1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord+1);
+	}
+	else
+	{
+		if(IsOnBoard(XBoardCoord-1, YBoardCoord-1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord-1);
+		if(IsOnBoard(XBoardCoord-1, YBoardCoord-1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord-1);
+	}
+	return KingTrier;
+}
+
+TArray<FBoardLocation>& AChessPawn::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+{
+	AllMoves.Empty();
+	return AllMoves;
+}
+
 
 bool AChessPawn::IsFirstMove()
 {

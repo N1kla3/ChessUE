@@ -216,7 +216,18 @@ void AChessBoard::HighlightCells()
 
 void AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
 {
-    //when pawn at the end of board transform it. Do it with GUI
+    ABoardCell* PromotionCell = nullptr;
+    for(auto Cell : cells)
+    {
+        if(Location == Cell->GetBoardLocation())
+        {
+            PromotionCell = Cell;
+            break;
+        }
+    }
+    PromotionCell->DestroyPiece();
+    //define gui to choose figure kind to spawn HERe
+    PromotionCell->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
 }
 
 void AChessBoard::SpawnBlackFigures()

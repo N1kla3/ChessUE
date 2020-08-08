@@ -63,16 +63,11 @@ void AChessPawn::AllMovesWithoutColor(const int8 Navigation)
 {
 	for(int8 i = -1; i <= 1; i++)
 	{
-		auto temp = Navigation;
-		int8 spec = 0;
-		if(i == 0)
-		{
-			spec = Navigation;
-			temp += Navigation;
-		}	
-		if(IsOnBoard(XBoardCoord+i, YBoardCoord+spec))AllMoves.Emplace(XBoardCoord+i, YBoardCoord+spec);
-		if(IsOnBoard(XBoardCoord+i, YBoardCoord+temp))
-			AllMoves.Emplace(XBoardCoord+i, YBoardCoord+temp);
+		if(IsOnBoard(XBoardCoord+i, YBoardCoord+Navigation))AllMoves.Emplace(XBoardCoord+i, YBoardCoord+Navigation);
+	}
+	if(CurrentMoveNumber == 0)
+	{
+		if(IsOnBoard(XBoardCoord, YBoardCoord+2*Navigation))AllMoves.Emplace(XBoardCoord, YBoardCoord+2*Navigation);
 	}
 }
 

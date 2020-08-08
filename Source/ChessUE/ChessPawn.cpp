@@ -49,7 +49,31 @@ TArray<FBoardLocation>& AChessPawn::TryForEnemyKing(FBoardLocation KingLocation)
 
 TArray<FBoardLocation>& AChessPawn::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
 {
-	//AllMoves.Empty();
+	auto Temp = AllMoves;
+	AllMoves.Empty();
+	for(auto BlockCell : blockCells)
+	{
+		if(BlockCell.Key != XBoardCoord)
+		{
+			//if color correct..
+			AllMoves.Add(BlockCell);
+		}
+	}
+	bool bHalfBlock = false;
+	for(auto i : Temp)
+	{
+		if(i.Key == XBoardCoord)
+		{
+			for(auto k : blockCells)
+			{
+				if(i == k)
+				{
+					bHalfBlock = true;
+				}
+			}
+			if(!bHalfBlock)AllMoves.Add(i);
+		}
+	}
 	return AllMoves;
 }
 

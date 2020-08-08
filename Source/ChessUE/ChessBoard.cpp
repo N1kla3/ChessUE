@@ -214,6 +214,11 @@ void AChessBoard::HighlightCells()
     }
 }
 
+void AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
+{
+    //when pawn at the end of board transform it. Do it with GUI
+}
+
 void AChessBoard::SpawnBlackFigures()
 {
     cells[0 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(), Black);

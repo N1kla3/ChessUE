@@ -69,6 +69,7 @@ public:
 	 */
 	void SetChosenPiece(AChessPiece* Piece);
 	void HighlightCells();
+	void CreateFigureFromPawn(const FBoardLocation Location);
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();

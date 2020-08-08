@@ -9,12 +9,13 @@ AChessPawn::AChessPawn()
 	const TCHAR* pathToModel = TEXT("/Game/Shape_Cone.Shape_Cone");
 	Init(pathToModel);
 	bIsFirstMove = false;
+	CurrentMoveNumber = 0;
 }
 
 TArray<FBoardLocation>& AChessPawn::GetAllMoves()
 {
 	AllMoves.Empty();
-	if(Color == White)
+	if(Color == Black)
 	{
 		AllMovesWithoutColor(1);
 	}
@@ -48,7 +49,7 @@ TArray<FBoardLocation>& AChessPawn::TryForEnemyKing(FBoardLocation KingLocation)
 
 TArray<FBoardLocation>& AChessPawn::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
 {
-	AllMoves.Empty();
+	//AllMoves.Empty();
 	return AllMoves;
 }
 
@@ -63,12 +64,49 @@ void AChessPawn::AllMovesWithoutColor(const int8 Navigation)
 	for(int8 i = -1; i <= 1; i++)
 	{
 		auto temp = Navigation;
+		int8 spec = 0;
 		if(i == 0)
 		{
+			spec = Navigation;
 			temp += Navigation;
 		}	
-		if(IsOnBoard(XBoardCoord+i, YBoardCoord))AllMoves.Emplace(XBoardCoord+i, YBoardCoord);
+		if(IsOnBoard(XBoardCoord+i, YBoardCoord+spec))AllMoves.Emplace(XBoardCoord+i, YBoardCoord+spec);
 		if(IsOnBoard(XBoardCoord+i, YBoardCoord+temp))
 			AllMoves.Emplace(XBoardCoord+i, YBoardCoord+temp);
 	}
+}
+
+int8 AChessPawn::GetCurrentMoveNumber()const
+{
+	return CurrentMoveNumber;
+}
+
+void AChessPawn::IncrementCurrentMoveNumber()
+{
+	CurrentMoveNumber++;
+}
+
+void AChessPawn::CheckEnPassant(const bool LeftToPawn, const bool RightToPawn)
+{
+	if(LeftToPawn)
+	{
+		AllMoves.Emplace(XBoardCoord-1, YBoardCoord);
+	}
+	if(RightToPawn)
+	{
+		AllMoves.Emplace(XBoardCoord+1, YBoardCoord);
+	}
+}
+
+bool AChessPawn::IsPromotionTime(const FBoardLocation LocationToMove)const
+{
+	if(Color == White && LocationToMove.Key == 1)
+	{
+		return true;
+	}
+	if(Color == Black && LocationToMove.Key == 8)
+	{
+		return true;
+	}
+	return false;
 }

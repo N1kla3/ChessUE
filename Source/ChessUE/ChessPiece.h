@@ -6,13 +6,13 @@
 #include "Containers/Map.h"
 #include "ChessPiece.generated.h"
 typedef TPair<int32, int32> FBoardLocation;
-
 UENUM()
 enum FigureColor
 {
 	White,
 	Black
 };
+typedef TPair<FBoardLocation, FigureColor> FLocWithColor;
 
 UCLASS(Abstract)
 class CHESSUE_API AChessPiece : public AActor
@@ -63,7 +63,7 @@ public:
 	 */
 	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation);
 	virtual TArray<FBoardLocation>& GetAllMoves();
-	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation> &blockCells);
+	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FLocWithColor> &blockCells);
 	
 	void SetColor(TEnumAsByte<FigureColor> Color);
 	TEnumAsByte<FigureColor> GetColor() const;
@@ -76,5 +76,7 @@ protected:
 
 	bool IsOnBoard(int32 X, int32 Y)const;
 
-    bool GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocation>& BlockCells);
+    bool GoThroughLine(const int8 X, const int8 Y, TArray<FLocWithColor>& BlockCells);
+
+	bool IsEnemy(FigureColor EnemyColor)const;
 };

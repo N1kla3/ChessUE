@@ -87,7 +87,7 @@ TArray<FBoardLocation>& AChessPiece::GetAllMoves()
  * \param blockCells it is locations of figures that placed on the possible Move locations of our figure
  * \return Moves considering other figures, but not check
  */
-TArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+TArray<FBoardLocation>& AChessPiece::GetCorrectMoves(TArray<FLocWithColor>& blockCells)
 {
 	return AllMoves;
 }
@@ -104,16 +104,17 @@ void AChessPiece::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-bool AChessPiece::GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocation>& BlockCells)
+bool AChessPiece::GoThroughLine(const int8 X, const int8 Y, TArray<FLocWithColor>& BlockCells)
 {
 	if(IsOnBoard(X, Y))
 	{
 		bool IsInclude = true;
 		for(auto cell : BlockCells)
 		{
-			if(cell == FBoardLocation(X, Y))
+			if(cell.Key == FBoardLocation(X, Y))
 			{
 				IsInclude = false;
+				if(IsEnemy(cell.Value))AllMoves.Emplace(X, Y);
 				break;
 			}
 		}
@@ -122,6 +123,15 @@ bool AChessPiece::GoThroughLine(const int8 X, const int8 Y, TArray<FBoardLocatio
 			AllMoves.Emplace(X, Y);
 			return false;
 		}
+	}
+	return true;
+}
+
+bool AChessPiece::IsEnemy(const FigureColor EnemyColor) const
+{
+	if(Color == EnemyColor)
+	{
+		return false;
 	}
 	return true;
 }

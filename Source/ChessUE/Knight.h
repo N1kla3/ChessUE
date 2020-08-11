@@ -22,5 +22,5 @@ public:
 
 	virtual TArray<FBoardLocation>& GetAllMoves() override;
 
-	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation>& blockCells) override;
+	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FLocWithColor>& blockCells) override;
 };

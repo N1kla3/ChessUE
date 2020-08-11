@@ -108,7 +108,7 @@ bool AChessBoard::CheckForMate()
  * \param AllMoves 
  * \return 
  */
-TArray<FBoardLocation>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves)
+TArray<FLocWithColor>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves)
 {
     GetAllBlockCells();
     BlockedForFigure.Empty();
@@ -116,23 +116,23 @@ TArray<FBoardLocation>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> 
     for (const auto other : FigsLocation)
     {
         for (auto my : AllMoves)
-            if (other.Key == my.Key && other.Value == my.Value)
+            if (other.Key.Key == my.Key && other.Key.Value == my.Value)
             {
-                BlockedForFigure.Add(my);
+                BlockedForFigure.Add(other);
             }
     }
 
     return BlockedForFigure;
 }
 
-TArray<FBoardLocation>& AChessBoard::GetAllBlockCells()
+TArray<FLocWithColor>& AChessBoard::GetAllBlockCells()
 {
     FigsLocation.Empty();
     for (auto cell : cells)
     {
         if (cell->GetPiece())
         {
-            FigsLocation.Add(cell->GetBoardLocation());
+            FigsLocation.Emplace(cell->GetBoardLocation(), cell->GetPiece()->GetColor());
         }
     }
     return FigsLocation;
@@ -156,7 +156,7 @@ void AChessBoard::CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocat
         if (counter < 1)EnemyFigMoves.Add(moves);
         for (auto figs : FigsLocation)
         {
-            if (figs == moves)
+            if (figs.Key == moves)
             {
                 counter++;
                 break;

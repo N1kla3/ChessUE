@@ -40,8 +40,8 @@ private:
 	bool bIsCheckToBlack;
 
 	TArray<FBoardLocation> FigureMoves;
-	TArray<FBoardLocation> FigsLocation;
-	TArray<FBoardLocation> BlockedForFigure;
+	TArray<FLocWithColor> FigsLocation;
+	TArray<FLocWithColor> BlockedForFigure;
 
 	UPROPERTY()
 	AChessPiece* ChosenPiece;
@@ -73,8 +73,8 @@ public:
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
-	TArray<FBoardLocation>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
-	TArray<FBoardLocation>& GetAllBlockCells();
+	TArray<FLocWithColor>& GetBlockCellsForLoc(TArray<FBoardLocation> AllMoves);
+	TArray<FLocWithColor>& GetAllBlockCells();
 
 	void CanBeatKing(TArray<FBoardLocation>& EnemyFigMoves, FBoardLocation Location, TEnumAsByte<FigureColor> Side);
 	bool IsInDefendersOfKing();

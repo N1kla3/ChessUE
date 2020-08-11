@@ -62,7 +62,7 @@ TArray<FBoardLocation>& ABishop::GetAllMoves()
     return AllMoves;
 }
 
-TArray<FBoardLocation>& ABishop::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+TArray<FBoardLocation>& ABishop::GetCorrectMoves(TArray<FLocWithColor>& blockCells)
 {
     AllMoves.Empty();
 
@@ -93,15 +93,16 @@ void ABishop::GoDiagonal(const int8 Index, const int8 Diff, bool Side)
     }
 }
 
-bool ABishop::GoThrowDiagonal(const int8 Index, bool Side, TArray<FBoardLocation>& BlockCells, const int8 Diff)
+bool ABishop::GoThrowDiagonal(const int8 Index, bool Side, TArray<FLocWithColor>& BlockCells, const int8 Diff)
 {
     if (Side)
     {
         for (const auto Cell : BlockCells)
         {
-            if (Cell.Key == Index && Cell.Value == YBoardCoord + Diff)
+            if (Cell.Key.Key == Index && Cell.Key.Value == YBoardCoord + Diff)
             {
-                Side = false;
+                if(IsEnemy(Cell.Value))GoDiagonal(Index, Diff, Side);
+                return false;
             }
         }
         GoDiagonal(Index, Diff, Side);

@@ -22,7 +22,7 @@ public:
 
 	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation) override;
 
-	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FBoardLocation>& blockCells) override;
+	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FLocWithColor>& blockCells) override;
 
 	bool IsFirstMove();
 

@@ -57,7 +57,7 @@ TArray<FBoardLocation>& ARook::GetAllMoves()
 	return AllMoves;
 }
 
-TArray<FBoardLocation>& ARook::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+TArray<FBoardLocation>& ARook::GetCorrectMoves(TArray<FLocWithColor>& blockCells)
 {
 	AllMoves.Empty();
 	for(int8 i = XBoardCoord+1; i <= MAXlocation; ++i)

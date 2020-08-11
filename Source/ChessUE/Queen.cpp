@@ -37,7 +37,7 @@ TArray<FBoardLocation>& AQueen::GetAllMoves()
 	return AllMoves;
 }
 
-TArray<FBoardLocation>& AQueen::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+TArray<FBoardLocation>& AQueen::GetCorrectMoves(TArray<FLocWithColor>& blockCells)
 {
 	ABishop::GetCorrectMoves(blockCells);
 	for(int8 i = XBoardCoord+1; i <= MAXlocation; ++i)

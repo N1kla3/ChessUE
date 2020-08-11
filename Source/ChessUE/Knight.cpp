@@ -48,7 +48,7 @@ TArray<FBoardLocation>& AKnight::GetAllMoves()
 	return AllMoves;
 }
 
-TArray<FBoardLocation>& AKnight::GetCorrectMoves(TArray<FBoardLocation>& blockCells)
+TArray<FBoardLocation>& AKnight::GetCorrectMoves(TArray<FLocWithColor>& blockCells)
 {
 	auto Temp = AllMoves;
 	AllMoves.Empty();
@@ -57,13 +57,12 @@ TArray<FBoardLocation>& AKnight::GetCorrectMoves(TArray<FBoardLocation>& blockCe
 		bool IsBlocked = false;
 		for(auto blockCell : blockCells)
 		{
-			if(move == blockCell)
+			if(move == blockCell.Key && !IsEnemy(blockCell.Value))
 			{
 				IsBlocked = true;
 			}
 		}
-		if(IsBlocked)Temp.Add(move);
+		if(!IsBlocked)AllMoves.Add(move);
 	}
-	AllMoves = Temp;
 	return AllMoves;
 }

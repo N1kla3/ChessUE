@@ -24,15 +24,15 @@ public:
 
 	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FLocWithColor>& blockCells) override;
 
-	bool IsFirstMove();
+	bool IsDoubleMove();
 
 	int8 GetCurrentMoveNumber()const;
 	void IncrementCurrentMoveNumber();
 
-	void CheckEnPassant(const bool LeftToPawn, const bool RightToPawn);
+	bool CheckEnPassant(const FBoardLocation Location);
 	bool IsPromotionTime(const FBoardLocation LocationToMove)const;
 private:
-	bool bIsFirstMove;
+	bool bIsDoubleMove;
 
 	void AllMovesWithoutColor(int8 Navigation);
 	

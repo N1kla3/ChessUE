@@ -90,6 +90,8 @@ private:
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();
 
+	FBoardLocation HandleChessPawn();
+	
 	FBoardLocation WhiteEnPassant;
 	FBoardLocation BlackEnPassant;
 

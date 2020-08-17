@@ -8,7 +8,7 @@ AChessPawn::AChessPawn()
 {
 	const TCHAR* pathToModel = TEXT("/Game/Shape_Cone.Shape_Cone");
 	Init(pathToModel);
-	bIsFirstMove = false;
+	bIsDoubleMove = false;
 	CurrentMoveNumber = 0;
 }
 
@@ -77,9 +77,9 @@ TArray<FBoardLocation>& AChessPawn::GetCorrectMoves(TArray<FLocWithColor>& block
 }
 
 
-bool AChessPawn::IsFirstMove()
+bool AChessPawn::IsDoubleMove()
 {
-	return bIsFirstMove;
+	return bIsDoubleMove;
 }
 
 void AChessPawn::AllMovesWithoutColor(const int8 Navigation)
@@ -104,16 +104,15 @@ void AChessPawn::IncrementCurrentMoveNumber()
 	CurrentMoveNumber++;
 }
 
-void AChessPawn::CheckEnPassant(const bool LeftToPawn, const bool RightToPawn)
+bool AChessPawn::CheckEnPassant(const FBoardLocation Location)
 {
-	if(LeftToPawn)
+	const bool IsCloseToPawn = (Location.Key == XBoardCoord+1 || Location.Key == XBoardCoord-1) && Location.Value == YBoardCoord;
+	if(IsCloseToPawn)
 	{
-		AllMoves.Emplace(XBoardCoord-1, YBoardCoord);
+		AllMoves.Add(Location);
+		return true;
 	}
-	if(RightToPawn)
-	{
-		AllMoves.Emplace(XBoardCoord+1, YBoardCoord);
-	}
+	return false;
 }
 
 bool AChessPawn::IsPromotionTime(const FBoardLocation LocationToMove)const

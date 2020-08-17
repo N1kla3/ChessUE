@@ -48,6 +48,7 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
         if(MoveToLocation == moves)
         {
             ClearCell(ChosenPiece->GetBoardLocation());
+            
             return true;
         }
     }
@@ -64,12 +65,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     bIsCheckToWhite = false;
 
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
-    AChessPawn* MyPawn = Cast<AChessPawn>(ChosenPiece);
-    if(MyPawn)
-    {
-        
-    }
-
+    FigureMoves.Add(HandleChessPawn());
     const bool bSideCheck = (ePieceColor == White ? bIsCheckToWhite : bIsCheckToBlack);
     /*if (bSideCheck)
     {
@@ -255,7 +251,7 @@ void AChessBoard::SetEnPass(const FBoardLocation Location, const FigureColor Col
     }
     else
     {
-        WhiteEnPassant = Location;
+        BlackEnPassant = Location;
     }
 }
 
@@ -301,6 +297,19 @@ void AChessBoard::SpawnWhiteFigures()
         shift += 8;
     }
     WKingLocation = FBoardLocation(5,8);
+}
+
+FBoardLocation AChessBoard::HandleChessPawn()
+{
+    auto IfPawn = Cast<AChessPawn>(ChosenPiece);
+    if(IfPawn)
+    {
+        FigureColor Color = IfPawn->GetColor();
+        auto EnPassLocation = Color == White ? BlackEnPassant : WhiteEnPassant;
+        if(IfPawn->CheckEnPassant(EnPassLocation))
+            return EnPassLocation;
+    }
+    return MakeTuple(0,0);
 }
 
 bool AChessBoard::IsInDefendersOfKing()

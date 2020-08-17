@@ -66,6 +66,7 @@ private:
 	void FindChessBoard();
 
 	void HandleChessPiece();
-
+	void HandleChessPawn(const FBoardLocation ToMove);
+	
 	void SwapPlayers();
 };

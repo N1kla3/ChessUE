@@ -4,6 +4,7 @@
 #include "GamePawn.h"
 
 #include "BoardCell.h"
+#include "ChessPawn.h"
 #include "Engine/Engine.h"
 #include "EngineUtils.h"
 #include "GameFramework/PlayerController.h"
@@ -153,6 +154,7 @@ void AGamePawn::HandleChessPiece()
 		if(Board->CheckEverything(CurrentCellFocus->GetBoardLocation()))
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
+			HandleChessPawn(CurrentCellFocus->GetBoardLocation());			
 			MoveFigureToCeil();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}else
@@ -168,6 +170,29 @@ void AGamePawn::HandleChessPiece()
 		CurrentCellFocus = nullptr;
 	}
 	Board->HighlightCells();
+}
+
+void AGamePawn::HandleChessPawn(const FBoardLocation ToMove)
+{
+	auto IfPawn = Cast<AChessPawn>(CurrentChessPieceFocus);
+	if(IfPawn)
+	{
+		const FigureColor Color = IfPawn->GetColor();
+		if(IfPawn->GetCurrentMoveNumber() == 0)
+		{
+			if(abs(IfPawn->GetBoardLocation().Value - ToMove.Value) == 2)
+			{
+				Board->SetEnPass(ToMove, Color);		
+			}
+		}else
+		{
+			Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());
+		}
+		IfPawn->IncrementCurrentMoveNumber();
+	}else
+	{
+		Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());
+	}
 }
 
 void AGamePawn::SwapPlayers()

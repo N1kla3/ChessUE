@@ -70,6 +70,8 @@ public:
 	void SetChosenPiece(AChessPiece* Piece);
 	void HighlightCells();
 	void CreateFigureFromPawn(const FBoardLocation Location);
+	void EmptyEnPass(FigureColor Color);
+	void SetEnPass(FBoardLocation Location, FigureColor Color);
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
@@ -87,5 +89,9 @@ private:
 	
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();
+
+	FBoardLocation WhiteEnPassant;
+	FBoardLocation BlackEnPassant;
+
 	
 };

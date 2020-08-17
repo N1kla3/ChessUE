@@ -64,6 +64,11 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     bIsCheckToWhite = false;
 
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
+    AChessPawn* MyPawn = Cast<AChessPawn>(ChosenPiece);
+    if(MyPawn)
+    {
+        
+    }
 
     const bool bSideCheck = (ePieceColor == White ? bIsCheckToWhite : bIsCheckToBlack);
     /*if (bSideCheck)
@@ -228,6 +233,30 @@ void AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
     PromotionCell->DestroyPiece();
     //define gui to choose figure kind to spawn HERe
     PromotionCell->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
+}
+
+void AChessBoard::EmptyEnPass(const FigureColor Color)
+{
+    if(Color == White)
+    {
+        WhiteEnPassant = MakeTuple(0, 0);
+    }
+    else
+    {
+        BlackEnPassant = MakeTuple(0, 0);
+    }
+}
+
+void AChessBoard::SetEnPass(const FBoardLocation Location, const FigureColor Color)
+{
+    if(Color == White)
+    {
+        WhiteEnPassant = Location;
+    }
+    else
+    {
+        WhiteEnPassant = Location;
+    }
 }
 
 void AChessBoard::SpawnBlackFigures()

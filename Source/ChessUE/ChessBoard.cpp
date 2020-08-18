@@ -39,12 +39,12 @@ void AChessBoard::Tick(float DeltaTime)
 
 bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
 {
-    for(auto moves : FigureMoves)
+    for (auto moves : FigureMoves)
     {
-        if(MoveToLocation == moves)
+        if (MoveToLocation == moves)
         {
             ClearCell(ChosenPiece->GetBoardLocation());
-            
+
             return true;
         }
     }
@@ -57,7 +57,7 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
     const auto ePieceColor = Piece->GetColor();
     CheckForCheck(ePieceColor);
 
-    bIsCheckToBlack = false;//incorrect position now for debug
+    bIsCheckToBlack = false; //incorrect position now for debug
     bIsCheckToWhite = false;
 
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
@@ -109,7 +109,7 @@ TArray<FLocWithColor>& AChessBoard::GetBlockCellsForLoc(TArray<FBoardLocation> A
 {
     GetAllBlockCells();
     BlockedForFigure.Empty();
-    
+
     for (const auto other : FigsLocation)
     {
         for (auto my : AllMoves)
@@ -179,7 +179,7 @@ void AChessBoard::SpawnCells()
             FVector spawnLocation = curActorLocation + FVector(Space * i, Space * k, 0.f);
             ABoardCell* cell = GetWorld()->SpawnActor<ABoardCell>(spawnLocation, rotation);
             cell->SetBoardLocation(FBoardLocation(i, k));
-            if((i+k) % 2 == 0)cell->InitColor(Black);
+            if ((i + k) % 2 == 0)cell->InitColor(Black);
             else cell->InitColor(White);
             cells.Add(cell);
         }
@@ -188,22 +188,22 @@ void AChessBoard::SpawnCells()
 
 void AChessBoard::ClearCell(const FBoardLocation Location)
 {
-    for(auto cell : cells)
+    for (auto cell : cells)
     {
-        if(cell->GetBoardLocation() == Location)
+        if (cell->GetBoardLocation() == Location)
         {
             cell->MoveOutPiece();
-        }    
+        }
     }
 }
 
 void AChessBoard::HighlightCells()
 {
-    for(auto moves : FigureMoves)
+    for (auto moves : FigureMoves)
     {
-        for(auto cell : cells)
+        for (auto cell : cells)
         {
-            if(moves == cell->GetBoardLocation())
+            if (moves == cell->GetBoardLocation())
             {
                 cell->SwapBetweenColors();
             }
@@ -214,9 +214,9 @@ void AChessBoard::HighlightCells()
 void AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
 {
     ABoardCell* PromotionCell = nullptr;
-    for(auto Cell : cells)
+    for (auto Cell : cells)
     {
-        if(Location == Cell->GetBoardLocation())
+        if (Location == Cell->GetBoardLocation())
         {
             PromotionCell = Cell;
             break;
@@ -229,7 +229,7 @@ void AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
 
 void AChessBoard::EmptyEnPass(const FigureColor Color)
 {
-    if(Color == White)
+    if (Color == White)
     {
         WhiteEnPassant = MakeTuple(0, 0);
     }
@@ -241,7 +241,7 @@ void AChessBoard::EmptyEnPass(const FigureColor Color)
 
 void AChessBoard::SetEnPass(const FBoardLocation Location, const FigureColor Color)
 {
-    if(Color == White)
+    if (Color == White)
     {
         WhiteEnPassant = Location;
     }
@@ -269,7 +269,7 @@ void AChessBoard::SpawnBlackFigures()
     {
         cells[i * COLUMNS + 1]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), Black);
     }
-    BKingLocation = FBoardLocation(5,1);
+    BKingLocation = FBoardLocation(5, 1);
 }
 
 void AChessBoard::SpawnWhiteFigures()
@@ -292,43 +292,109 @@ void AChessBoard::SpawnWhiteFigures()
         cells[shift]->SetPiece(GetWorld()->SpawnActor<AChessPawn>(), White);
         shift += 8;
     }
-    WKingLocation = FBoardLocation(5,8);
+    WKingLocation = FBoardLocation(5, 8);
 }
 
 void AChessBoard::CheckShortCastling()
 {
     auto King = Cast<AKing>(ChosenPiece);
-    if(King)
+    if (King)
     {
-        FBoardLocation KingLocation = King->GetBoardLocation();
+        if (King->IsMoved())return;
+        int32 KingX = King->GetBoardLocation().Key;
+        int32 KingY = King->GetBoardLocation().Value;
         FigureColor Color = King->GetColor();
-        for(auto Cell : cells)
-        {
-            if(Cell->GetBoardLocation().Key == KingLocation.Key+2
-                && Cell->GetBoardLocation().Value == KingLocation.Value)
-            {
-                if(Cell->GetPiece())return;
-            }      
-        }
-        
+        if (FindPiece(MakeTuple(KingX + 2, KingY)))return;
+        auto Rook = Cast<ARook>(FindPiece(MakeTuple(KingX + 3, KingY)));
+        if (!Rook || Rook->IsMoved())return;
+        TArray<FBoardLocation> MovesToCheck;
+        MovesToCheck.Emplace(KingX, KingY);
+        MovesToCheck.Emplace(KingX+1, KingY);
+        MovesToCheck.Emplace(KingX+2, KingY);
+        CheckMovesForCheck(MovesToCheck, Color);
     }
 }
 
 void AChessBoard::CheckLongCastling()
 {
+    auto King = Cast<AKing>(ChosenPiece);
+    if (King)
+    {
+        if (King->IsMoved())return;
+        int32 KingX = King->GetBoardLocation().Key;
+        int32 KingY = King->GetBoardLocation().Value;
+        FigureColor Color = King->GetColor();
+        if (FindPiece(MakeTuple(KingX - 2, KingY)))return;
+        auto Rook = Cast<ARook>(FindPiece(MakeTuple(KingX - 4, KingY)));
+        if (!Rook || Rook->IsMoved())return;
+        TArray<FBoardLocation> MovesToCheck;
+        MovesToCheck.Emplace(KingX, KingY);
+        MovesToCheck.Emplace(KingX-1, KingY);
+        MovesToCheck.Emplace(KingX-2, KingY);
+        CheckMovesForCheck(MovesToCheck, Color);
+    }
+}
+
+bool AChessBoard::CheckMovesForCheck(TArray<FBoardLocation>& Moves, FigureColor MoverColor)
+{
+    for (auto enemyCell : cells)
+    {
+        auto Fig = enemyCell->GetPiece();
+        if (Fig && Fig->GetColor() != MoverColor)
+        {
+            for (auto Move : Moves)
+            {
+                TArray<FBoardLocation> Temp = Fig->TryForEnemyKing(Move);
+                if (CheckOrNot(Temp))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool AChessBoard::CheckOrNot(TArray<FBoardLocation>& DangerMoves)
+{
+    auto Blocks = GetBlockCellsForLoc(DangerMoves);
+    for(auto Move : DangerMoves)
+    {
+        for(auto Block : Blocks)
+        {
+            if(Move == Block.Key)
+            {
+                return false;      
+            }
+        }
+    }
+    return true;
 }
 
 FBoardLocation AChessBoard::HandleChessPawn()
 {
     auto IfPawn = Cast<AChessPawn>(ChosenPiece);
-    if(IfPawn)
+    if (IfPawn)
     {
         FigureColor Color = IfPawn->GetColor();
         auto EnPassLocation = Color == White ? BlackEnPassant : WhiteEnPassant;
-        if(IfPawn->CheckEnPassant(EnPassLocation))
+        if (IfPawn->CheckEnPassant(EnPassLocation))
             return EnPassLocation;
     }
-    return MakeTuple(0,0);
+    return MakeTuple(0, 0);
+}
+
+AChessPiece* AChessBoard::FindPiece(const FBoardLocation PieceLocation)
+{
+    for (auto Cell : cells)
+    {
+        if (Cell->GetBoardLocation().Key == PieceLocation.Key + 2
+            && Cell->GetBoardLocation().Value == PieceLocation.Value)
+        {
+            if (Cell->GetPiece())return Cell->GetPiece();
+        }
+    }
+    return nullptr;
 }
 
 bool AChessBoard::IsInDefendersOfKing()

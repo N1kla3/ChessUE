@@ -89,10 +89,12 @@ private:
 	void CheckShortCastling();
 	void CheckLongCastling();
 
+	bool CheckMovesForCheck(TArray<FBoardLocation>& Moves, FigureColor MoverColor);
+	bool CheckOrNot(TArray<FBoardLocation>& DangerMoves);
 	FBoardLocation HandleChessPawn();
 	
 	FBoardLocation WhiteEnPassant;
 	FBoardLocation BlackEnPassant;
 
-	
+	AChessPiece* FindPiece(const FBoardLocation PieceLocation);
 };

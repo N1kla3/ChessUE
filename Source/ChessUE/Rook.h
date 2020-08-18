@@ -23,4 +23,9 @@ public:
 	virtual TArray<FBoardLocation>& GetAllMoves()override;
 
 	virtual TArray<FBoardLocation>& GetCorrectMoves(TArray<FLocWithColor>& blockCells)override;
+
+	bool IsMoved(){return bIsMoved;}
+	void Moved();
+private:
+	bool bIsMoved;
 };

@@ -23,4 +23,12 @@ public:
 	virtual TArray<FBoardLocation>& TryForEnemyKing(FBoardLocation KingLocation) override;
 
 	virtual  TArray<FBoardLocation>& GetCorrectMoves(TArray<FLocWithColor>& blockCells) override;
+
+	FBoardLocation AddShortCastling(bool IsPossible);
+	FBoardLocation AddLongCastling(bool IsPossible);
+
+	bool IsMoved(){return bNotMoved;}
+	void Moved();
+private:
+	bool bNotMoved;
 };

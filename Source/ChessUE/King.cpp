@@ -8,6 +8,7 @@ AKing::AKing()
 {
 	const TCHAR* pathToModel = TEXT("/Game/Shape_Cone.Shape_Cone");
 	Init(pathToModel);
+	bNotMoved = false;
 }
 
 TArray<FBoardLocation>& AKing::GetAllMoves()
@@ -53,4 +54,54 @@ TArray<FBoardLocation>& AKing::GetCorrectMoves(TArray<FLocWithColor>& blockCells
 		if(!TimeTo)AllMoves.Add(Move);
 	}
 	return AllMoves;
+}
+
+FBoardLocation AKing::AddShortCastling(const bool IsPossible)
+{
+	if(IsPossible)
+	{
+		bool IsNotBlocked = false;
+		for(auto Move : AllMoves)
+		{
+			if(Move == MakeTuple(XBoardCoord+1, YBoardCoord))
+			{
+				IsNotBlocked = true;
+				break;
+			}
+		}
+		if(IsNotBlocked)
+		{
+			AllMoves.Emplace(XBoardCoord+2, YBoardCoord);
+			return MakeTuple(XBoardCoord+2, YBoardCoord);
+		}
+	}
+	return MakeTuple(0,0);
+}
+
+FBoardLocation AKing::AddLongCastling(const bool IsPossible)
+{
+	if(IsPossible)
+	{
+		bool IsNotBlocked = false;
+		for(auto Move : AllMoves)
+		{
+			if(Move == MakeTuple(XBoardCoord-1, YBoardCoord))
+			{
+				IsNotBlocked = true;
+				break;
+			}
+		}
+		if(IsNotBlocked)
+		{
+			AllMoves.Emplace(XBoardCoord-2, YBoardCoord);
+			return MakeTuple(XBoardCoord-2, YBoardCoord);
+		}
+	}
+	return MakeTuple(0,0);
+}
+
+void AKing::Moved()
+{
+	if(!bNotMoved)
+		bNotMoved = true;
 }

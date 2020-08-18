@@ -18,10 +18,6 @@ AChessBoard::AChessBoard()
     // Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
     PrimaryActorTick.bCanEverTick = true;
 
-    ROWS = 8;
-    COLUMNS = 8;
-    Space = 100.0;
-
     URoot = CreateDefaultSubobject<USceneComponent>(TEXT("root"));
     RootComponent = URoot;
 }
@@ -297,6 +293,29 @@ void AChessBoard::SpawnWhiteFigures()
         shift += 8;
     }
     WKingLocation = FBoardLocation(5,8);
+}
+
+void AChessBoard::CheckShortCastling()
+{
+    auto King = Cast<AKing>(ChosenPiece);
+    if(King)
+    {
+        FBoardLocation KingLocation = King->GetBoardLocation();
+        FigureColor Color = King->GetColor();
+        for(auto Cell : cells)
+        {
+            if(Cell->GetBoardLocation().Key == KingLocation.Key+2
+                && Cell->GetBoardLocation().Value == KingLocation.Value)
+            {
+                if(Cell->GetPiece())return;
+            }      
+        }
+        
+    }
+}
+
+void AChessBoard::CheckLongCastling()
+{
 }
 
 FBoardLocation AChessBoard::HandleChessPawn()

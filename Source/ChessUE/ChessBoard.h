@@ -22,14 +22,10 @@ public:
 	
 private:
 
-	UPROPERTY(EditAnywhere, Category="Proprties")
-	int32 ROWS;
+	const int32 ROWS = 8;
 
-	UPROPERTY(EditAnywhere, Category="Proporties")
-	int32 COLUMNS;
-
-	UPROPERTY(EditAnywhere, Category="Proporties")
-	float Space;
+	const int32 COLUMNS = 8;
+	const float Space = 100.0;
 
 	FBoardLocation WKingLocation;
 	FBoardLocation BKingLocation;
@@ -89,6 +85,9 @@ private:
 	
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();
+
+	void CheckShortCastling();
+	void CheckLongCastling();
 
 	FBoardLocation HandleChessPawn();
 	

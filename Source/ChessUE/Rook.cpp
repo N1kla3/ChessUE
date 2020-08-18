@@ -12,6 +12,7 @@ ARook::ARook()
 {
 	const TCHAR* pathToModel = TEXT("/Game/Shape_Cone.Shape_Cone");
 	Init(pathToModel);
+	bIsMoved = false;
 }
 
 TArray<FBoardLocation>& ARook::TryForEnemyKing(FBoardLocation KingLocation)
@@ -77,6 +78,12 @@ TArray<FBoardLocation>& ARook::GetCorrectMoves(TArray<FLocWithColor>& blockCells
 		if(GoThroughLine(XBoardCoord, i, blockCells))break;
 	}
 	return AllMoves;
+}
+
+void ARook::Moved()
+{
+	if(bIsMoved)
+		bIsMoved = true;
 }
 
 

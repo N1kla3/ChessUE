@@ -67,6 +67,10 @@ private:
 
 	void HandleChessPiece();
 	void HandleChessPawn(const FBoardLocation ToMove);
+
+	void IncreaseMoveIfRook();
+	void IncreaseMoveIfKing();
+	void MakeCastlingIfNeeded(const FBoardLocation ToMoveLocation);
 	
 	void SwapPlayers();
 };

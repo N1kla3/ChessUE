@@ -7,6 +7,8 @@
 #include "ChessPawn.h"
 #include "Engine/Engine.h"
 #include "EngineUtils.h"
+#include "King.h"
+#include "Rook.h"
 #include "GameFramework/PlayerController.h"
 
 
@@ -155,6 +157,9 @@ void AGamePawn::HandleChessPiece()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("approved"));
 			HandleChessPawn(CurrentCellFocus->GetBoardLocation());			
+			IncreaseMoveIfKing();
+			IncreaseMoveIfRook();
+			MakeCastlingIfNeeded(CurrentCellFocus->GetBoardLocation());
 			MoveFigureToCeil();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}else
@@ -192,6 +197,36 @@ void AGamePawn::HandleChessPawn(const FBoardLocation ToMove)
 	}else
 	{
 		Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());
+	}
+}
+
+void AGamePawn::IncreaseMoveIfRook()
+{
+	auto Rook = Cast<ARook>(CurrentChessPieceFocus);
+	if(Rook)
+		Rook->Moved();
+}
+
+void AGamePawn::IncreaseMoveIfKing()
+{
+	auto King = Cast<AKing>(CurrentChessPieceFocus);
+	if(King)
+		King->Moved();
+}
+
+void AGamePawn::MakeCastlingIfNeeded(const FBoardLocation ToMoveLocation)
+{
+	auto King = Cast<AKing>(CurrentChessPieceFocus);
+	if(King)
+	{
+		const FBoardLocation Loc = King->GetBoardLocation();
+		if(Loc.Key - ToMoveLocation.Key == 2)
+		{
+			Board->DoShortCastling(Loc);
+		}else if(Loc.Key - ToMoveLocation.Key == -2)
+		{
+			Board->DoLongCastling(Loc);
+		}
 	}
 }
 

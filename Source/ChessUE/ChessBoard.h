@@ -68,6 +68,8 @@ public:
 	void CreateFigureFromPawn(const FBoardLocation Location);
 	void EmptyEnPass(FigureColor Color);
 	void SetEnPass(FBoardLocation Location, FigureColor Color);
+	void DoShortCastling(FBoardLocation KingLocation);
+	void DoLongCastling(FBoardLocation KingLocation);
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
@@ -88,6 +90,12 @@ private:
 
 	void CheckShortCastling();
 	void CheckLongCastling();
+
+	ABoardCell* FindCell(FBoardLocation Location);
+	/**
+	 * Swaps from Second to first
+	 */
+	void SwapCellPieces(ABoardCell& First, ABoardCell& Second);
 
 	bool CheckMovesForCheck(TArray<FBoardLocation>& Moves, FigureColor MoverColor);
 	bool CheckOrNot(TArray<FBoardLocation>& DangerMoves);

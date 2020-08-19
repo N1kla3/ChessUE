@@ -62,6 +62,8 @@ void AChessBoard::SetChosenPiece(AChessPiece* Piece)
 
     FigureMoves = Piece->GetCorrectMoves(GetBlockCellsForLoc(Piece->GetAllMoves()));
     FigureMoves.Add(HandleChessPawn());
+    CheckLongCastling();
+    CheckShortCastling();
     const bool bSideCheck = (ePieceColor == White ? bIsCheckToWhite : bIsCheckToBlack);
     /*if (bSideCheck)
     {
@@ -311,7 +313,9 @@ void AChessBoard::CheckShortCastling()
         MovesToCheck.Emplace(KingX, KingY);
         MovesToCheck.Emplace(KingX+1, KingY);
         MovesToCheck.Emplace(KingX+2, KingY);
-        CheckMovesForCheck(MovesToCheck, Color);
+        if(CheckMovesForCheck(MovesToCheck, Color))
+            FigureMoves.Add(King->AddShortCastling(true));
+        
     }
 }
 
@@ -331,7 +335,44 @@ void AChessBoard::CheckLongCastling()
         MovesToCheck.Emplace(KingX, KingY);
         MovesToCheck.Emplace(KingX-1, KingY);
         MovesToCheck.Emplace(KingX-2, KingY);
-        CheckMovesForCheck(MovesToCheck, Color);
+        if(CheckMovesForCheck(MovesToCheck, Color))
+            FigureMoves.Add(King->AddLongCastling(true));
+    }
+}
+
+void AChessBoard::DoShortCastling(FBoardLocation KingLocation)
+{
+    auto One = FindCell(MakeTuple(KingLocation.Key+1, KingLocation.Value));
+    auto Two = FindCell(MakeTuple(KingLocation.Key+3, KingLocation.Value));
+    SwapCellPieces(*One, *Two);
+}
+
+void AChessBoard::DoLongCastling(FBoardLocation KingLocation)
+{
+    auto One = FindCell(MakeTuple(KingLocation.Key-1, KingLocation.Value));
+    auto Two = FindCell(MakeTuple(KingLocation.Key-4, KingLocation.Value));
+    SwapCellPieces(*One, *Two);
+}
+
+ABoardCell* AChessBoard::FindCell(const FBoardLocation Location)
+{
+    for(auto Cell : cells)
+    {
+        if(Cell->GetBoardLocation() == Location)
+        {
+            return Cell;
+        }
+    }
+    return nullptr;
+}
+
+void AChessBoard::SwapCellPieces(ABoardCell& First, ABoardCell& Second)
+{
+    auto Piece = Second.GetPiece();
+    if(Piece)
+    {
+        Second.MoveOutPiece();
+        First.SetPiece(Piece, Piece->GetColor());
     }
 }
 

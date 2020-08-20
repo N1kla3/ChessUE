@@ -203,6 +203,7 @@ void AChessBoard::HighlightCells()
 {
     for (auto moves : FigureMoves)
     {
+        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("+1"));
         for (auto cell : cells)
         {
             if (moves == cell->GetBoardLocation())
@@ -264,8 +265,8 @@ void AChessBoard::SpawnBlackFigures()
     cells[2 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(), Black);
     cells[5 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ABishop>(), Black);
 
-    cells[3 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKing>(), Black);
-    cells[4 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AQueen>(), Black);
+    cells[4 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AKing>(), Black);
+    cells[3 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<AQueen>(), Black);
 
     for (int i = 0; i < ROWS; i++)
     {
@@ -313,7 +314,7 @@ void AChessBoard::CheckShortCastling()
         MovesToCheck.Emplace(KingX, KingY);
         MovesToCheck.Emplace(KingX+1, KingY);
         MovesToCheck.Emplace(KingX+2, KingY);
-        if(CheckMovesForCheck(MovesToCheck, Color))
+        //if(!CheckMovesForCheck(MovesToCheck, Color)) problem here
             FigureMoves.Add(King->AddShortCastling(true));
         
     }
@@ -335,7 +336,7 @@ void AChessBoard::CheckLongCastling()
         MovesToCheck.Emplace(KingX, KingY);
         MovesToCheck.Emplace(KingX-1, KingY);
         MovesToCheck.Emplace(KingX-2, KingY);
-        if(CheckMovesForCheck(MovesToCheck, Color))
+        //if(!CheckMovesForCheck(MovesToCheck, Color))
             FigureMoves.Add(King->AddLongCastling(true));
     }
 }
@@ -398,6 +399,7 @@ bool AChessBoard::CheckMovesForCheck(TArray<FBoardLocation>& Moves, FigureColor 
 
 bool AChessBoard::CheckOrNot(TArray<FBoardLocation>& DangerMoves)
 {
+    if(!DangerMoves.IsValidIndex(0))return false;
     auto Blocks = GetBlockCellsForLoc(DangerMoves);
     for(auto Move : DangerMoves)
     {
@@ -429,7 +431,7 @@ AChessPiece* AChessBoard::FindPiece(const FBoardLocation PieceLocation)
 {
     for (auto Cell : cells)
     {
-        if (Cell->GetBoardLocation().Key == PieceLocation.Key + 2
+        if (Cell->GetBoardLocation().Key == PieceLocation.Key
             && Cell->GetBoardLocation().Value == PieceLocation.Value)
         {
             if (Cell->GetPiece())return Cell->GetPiece();

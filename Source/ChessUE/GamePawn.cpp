@@ -222,10 +222,10 @@ void AGamePawn::MakeCastlingIfNeeded(const FBoardLocation ToMoveLocation)
 		const FBoardLocation Loc = King->GetBoardLocation();
 		if(Loc.Key - ToMoveLocation.Key == 2)
 		{
-			Board->DoShortCastling(Loc);
+			Board->DoLongCastling(Loc);
 		}else if(Loc.Key - ToMoveLocation.Key == -2)
 		{
-			Board->DoLongCastling(Loc);
+			Board->DoShortCastling(Loc);
 		}
 	}
 }

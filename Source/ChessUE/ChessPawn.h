@@ -29,7 +29,7 @@ public:
 	int8 GetCurrentMoveNumber()const;
 	void IncrementCurrentMoveNumber();
 
-	bool CheckEnPassant(const FBoardLocation Location);
+	FBoardLocation CheckEnPassant(const FBoardLocation Location);
 	bool IsPromotionTime(const FBoardLocation LocationToMove)const;
 private:
 	bool bIsDoubleMove;

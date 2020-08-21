@@ -104,15 +104,17 @@ void AChessPawn::IncrementCurrentMoveNumber()
 	CurrentMoveNumber++;
 }
 
-bool AChessPawn::CheckEnPassant(const FBoardLocation Location)
+FBoardLocation AChessPawn::CheckEnPassant(const FBoardLocation Location)
 {
 	const bool IsCloseToPawn = (Location.Key == XBoardCoord+1 || Location.Key == XBoardCoord-1) && Location.Value == YBoardCoord;
+	const int32 Diff = Color == White ? -1 : 1;
+	const FBoardLocation ToMoveLocation = MakeTuple(Location.Key, Location.Value+Diff); 
 	if(IsCloseToPawn)
 	{
-		AllMoves.Add(Location);
-		return true;
+		AllMoves.Add(ToMoveLocation);
+		return ToMoveLocation;
 	}
-	return false;
+	return MakeTuple(0, 0);
 }
 
 bool AChessPawn::IsPromotionTime(const FBoardLocation LocationToMove)const

@@ -68,9 +68,11 @@ public:
 	AChessPiece* CreateFigureFromPawn(const FBoardLocation Location);
 	void EmptyEnPass(FigureColor Color);
 	void SetEnPass(FBoardLocation Location, FigureColor Color);
+	FBoardLocation GetEnPass(FigureColor Color)const;
 	void DoShortCastling(FBoardLocation KingLocation);
 	void DoLongCastling(FBoardLocation KingLocation);
 	void ClearCell(const FBoardLocation Location);
+	ABoardCell* FindCell(FBoardLocation Location);
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
@@ -91,7 +93,6 @@ private:
 	void CheckShortCastling();
 	void CheckLongCastling();
 
-	ABoardCell* FindCell(FBoardLocation Location);
 	/**
 	 * Swaps from Second to first
 	 */

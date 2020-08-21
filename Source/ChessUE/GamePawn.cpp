@@ -192,9 +192,18 @@ void AGamePawn::HandleChessPawn(const FBoardLocation ToMove)
 			}
 		}else
 		{
-			Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());
+			Board->EmptyEnPass(Color);
 		}
 		IfPawn->IncrementCurrentMoveNumber();
+		auto YenPass = Board->GetEnPass(IfPawn->GetColor());
+		auto YToMove = ToMove.Value;
+		auto Coff = Color == White ? 1 : -1;
+		if(YenPass.Value - YToMove == Coff)
+		{
+			auto Cell = Board->FindCell(YenPass);
+			Cell->DestroyPiece();
+			Cell->MoveOutPiece();
+		}
 	}else
 	{
 		Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());

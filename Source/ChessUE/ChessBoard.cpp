@@ -246,6 +246,11 @@ void AChessBoard::SetEnPass(const FBoardLocation Location, const FigureColor Col
     }
 }
 
+FBoardLocation AChessBoard::GetEnPass(const FigureColor Color) const
+{
+    return Color == White ? BlackEnPassant : WhiteEnPassant;
+}
+
 void AChessBoard::SpawnBlackFigures()
 {
     cells[0 * COLUMNS]->SetPiece(GetWorld()->SpawnActor<ARook>(), Black);
@@ -413,8 +418,7 @@ FBoardLocation AChessBoard::HandleChessPawn()
     {
         FigureColor Color = IfPawn->GetColor();
         auto EnPassLocation = Color == White ? BlackEnPassant : WhiteEnPassant;
-        if (IfPawn->CheckEnPassant(EnPassLocation))
-            return EnPassLocation;
+        return IfPawn->CheckEnPassant(EnPassLocation);
     }
     return MakeTuple(0, 0);
 }

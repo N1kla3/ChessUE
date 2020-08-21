@@ -117,11 +117,11 @@ bool AChessPawn::CheckEnPassant(const FBoardLocation Location)
 
 bool AChessPawn::IsPromotionTime(const FBoardLocation LocationToMove)const
 {
-	if(Color == White && LocationToMove.Key == 1)
+	if(Color == White && LocationToMove.Value == 1)
 	{
 		return true;
 	}
-	if(Color == Black && LocationToMove.Key == 8)
+	if(Color == Black && LocationToMove.Value == 8)
 	{
 		return true;
 	}

@@ -43,8 +43,6 @@ bool AChessBoard::CheckEverything(FBoardLocation MoveToLocation)
     {
         if (MoveToLocation == moves)
         {
-            ClearCell(ChosenPiece->GetBoardLocation());
-
             return true;
         }
     }
@@ -203,7 +201,6 @@ void AChessBoard::HighlightCells()
 {
     for (auto moves : FigureMoves)
     {
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("+1"));
         for (auto cell : cells)
         {
             if (moves == cell->GetBoardLocation())
@@ -214,20 +211,15 @@ void AChessBoard::HighlightCells()
     }
 }
 
-void AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
+AChessPiece* AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
 {
-    ABoardCell* PromotionCell = nullptr;
-    for (auto Cell : cells)
-    {
-        if (Location == Cell->GetBoardLocation())
-        {
-            PromotionCell = Cell;
-            break;
-        }
-    }
-    PromotionCell->DestroyPiece();
+    ABoardCell* BeforePromotionCell = FindCell(Location);
+    auto Color = BeforePromotionCell->GetPiece()->GetColor();
+    BeforePromotionCell->DestroyPiece();
     //define gui to choose figure kind to spawn HERe
-    PromotionCell->SetPiece(GetWorld()->SpawnActor<AKnight>(), White);
+    BeforePromotionCell->SetPiece(GetWorld()->SpawnActor<AKnight>(), Color);
+    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Knight"));
+    return BeforePromotionCell->GetPiece();
 }
 
 void AChessBoard::EmptyEnPass(const FigureColor Color)

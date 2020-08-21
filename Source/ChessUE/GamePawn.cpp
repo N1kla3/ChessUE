@@ -89,6 +89,7 @@ void AGamePawn::MoveChessPiece(float a)
 
 void AGamePawn::MoveFigureToCeil()
 {
+	Board->ClearCell(CurrentChessPieceFocus->GetBoardLocation());
 	CurrentCellFocus->DestroyPiece();
 	CurrentCellFocus->SetPiece(CurrentChessPieceFocus, CurrentChessPieceFocus->GetColor());
 	CurrentChessPieceFocus = nullptr;
@@ -197,6 +198,13 @@ void AGamePawn::HandleChessPawn(const FBoardLocation ToMove)
 	}else
 	{
 		Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());
+	}
+	if(IfPawn)
+	{
+		if(IfPawn->IsPromotionTime(ToMove))
+		{
+			CurrentChessPieceFocus = Board->CreateFigureFromPawn(IfPawn->GetBoardLocation());
+		}
 	}
 }
 

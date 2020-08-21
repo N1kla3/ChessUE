@@ -65,11 +65,12 @@ public:
 	 */
 	void SetChosenPiece(AChessPiece* Piece);
 	void HighlightCells();
-	void CreateFigureFromPawn(const FBoardLocation Location);
+	AChessPiece* CreateFigureFromPawn(const FBoardLocation Location);
 	void EmptyEnPass(FigureColor Color);
 	void SetEnPass(FBoardLocation Location, FigureColor Color);
 	void DoShortCastling(FBoardLocation KingLocation);
 	void DoLongCastling(FBoardLocation KingLocation);
+	void ClearCell(const FBoardLocation Location);
 private:
 	void CheckForCheck(TEnumAsByte<FigureColor> Color);
 	bool CheckForMate();
@@ -83,7 +84,6 @@ private:
 	void MakeMovesNoCheck();
 	
 	void SpawnCells();
-	void ClearCell(const FBoardLocation Location);
 	
 	void SpawnBlackFigures();
 	void SpawnWhiteFigures();

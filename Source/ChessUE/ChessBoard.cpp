@@ -311,7 +311,7 @@ void AChessBoard::CheckShortCastling()
         MovesToCheck.Emplace(KingX, KingY);
         MovesToCheck.Emplace(KingX+1, KingY);
         MovesToCheck.Emplace(KingX+2, KingY);
-        //if(!CheckMovesForCheck(MovesToCheck, Color)) problem here
+        if(CheckMovesForCheck(MovesToCheck, Color))
             FigureMoves.Add(King->AddShortCastling(true));
         
     }
@@ -333,7 +333,7 @@ void AChessBoard::CheckLongCastling()
         MovesToCheck.Emplace(KingX, KingY);
         MovesToCheck.Emplace(KingX-1, KingY);
         MovesToCheck.Emplace(KingX-2, KingY);
-        //if(!CheckMovesForCheck(MovesToCheck, Color))
+        if(CheckMovesForCheck(MovesToCheck, Color))
             FigureMoves.Add(King->AddLongCastling(true));
     }
 }
@@ -381,34 +381,37 @@ bool AChessBoard::CheckMovesForCheck(TArray<FBoardLocation>& Moves, FigureColor 
         auto Fig = enemyCell->GetPiece();
         if (Fig && Fig->GetColor() != MoverColor)
         {
+            int8 SpecCoff = 1;
             for (auto Move : Moves)
             {
                 TArray<FBoardLocation> Temp = Fig->TryForEnemyKing(Move);
-                if (CheckOrNot(Temp))
+                if(CheckOrNot(Temp, SpecCoff))
                 {
-                    return true;
+                    return false;
                 }
+                if(SpecCoff == 1)SpecCoff--; 
             }
         }
     }
-    return false;
+    return true;
 }
 
-bool AChessBoard::CheckOrNot(TArray<FBoardLocation>& DangerMoves)
+bool AChessBoard::CheckOrNot(TArray<FBoardLocation>& DangerMoves, int8 Count)
 {
     if(!DangerMoves.IsValidIndex(0))return false;
     auto Blocks = GetBlockCellsForLoc(DangerMoves);
+    int8 LocalCount = 0;
     for(auto Move : DangerMoves)
     {
         for(auto Block : Blocks)
         {
             if(Move == Block.Key)
             {
-                return false;      
+                LocalCount++;   
             }
         }
     }
-    return true;
+    return LocalCount > Count ? false : true;
 }
 
 FBoardLocation AChessBoard::HandleChessPawn()

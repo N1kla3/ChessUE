@@ -99,7 +99,7 @@ private:
 	void SwapCellPieces(ABoardCell& First, ABoardCell& Second);
 
 	bool CheckMovesForCheck(TArray<FBoardLocation>& Moves, FigureColor MoverColor);
-	bool CheckOrNot(TArray<FBoardLocation>& DangerMoves);
+	bool CheckOrNot(TArray<FBoardLocation>& DangerMoves, int8 Count);
 	FBoardLocation HandleChessPawn();
 	
 	FBoardLocation WhiteEnPassant;

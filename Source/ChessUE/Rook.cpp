@@ -21,18 +21,20 @@ TArray<FBoardLocation>& ARook::TryForEnemyKing(FBoardLocation KingLocation)
 	if(KingLocation.Key == XBoardCoord)
 	{
 		const int8 shift = KingLocation.Value < YBoardCoord ? -1 : 1;
-		for(int8 i = YBoardCoord+1; i != KingLocation.Value+shift; i += shift)
+		for(int8 i = YBoardCoord+shift; i != KingLocation.Value; i += shift)
 		{
 			KingTrier.Emplace(XBoardCoord, i);
 		}
+		KingTrier.Add(KingLocation);
 	}
 	else if(KingLocation.Value == YBoardCoord)
 	{
 		const int8 shift = KingLocation.Key < XBoardCoord ? -1 : 1;
-		for(int8 i = XBoardCoord+1; i != KingLocation.Key; i += shift)
+		for(int8 i = XBoardCoord+shift; i != KingLocation.Key; i += shift)
 		{
 			KingTrier.Emplace(i, YBoardCoord);
 		}
+		KingTrier.Add(KingLocation);
 	}
 	return KingTrier;
 }

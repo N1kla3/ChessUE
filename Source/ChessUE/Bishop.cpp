@@ -40,6 +40,7 @@ TArray<FBoardLocation>& ABishop::TryForEnemyKing(FBoardLocation KingLocation)
         temp.Value += YIter;
         KingTrier.Add(temp);
     }
+    KingTrier.Add(KingLocation);
     return KingTrier;
 }
 

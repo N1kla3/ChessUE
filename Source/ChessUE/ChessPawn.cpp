@@ -37,12 +37,12 @@ TArray<FBoardLocation>& AChessPawn::TryForEnemyKing(FBoardLocation KingLocation)
 	if(Color == White)
 	{
 		if(IsOnBoard(XBoardCoord-1, YBoardCoord+1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord+1);
-		if(IsOnBoard(XBoardCoord-1, YBoardCoord+1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord+1);
+		if(IsOnBoard(XBoardCoord-1, YBoardCoord-1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord-1);
 	}
 	else
 	{
-		if(IsOnBoard(XBoardCoord-1, YBoardCoord-1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord-1);
-		if(IsOnBoard(XBoardCoord-1, YBoardCoord-1))KingTrier.Emplace(XBoardCoord-1, YBoardCoord-1);
+		if(IsOnBoard(XBoardCoord+1, YBoardCoord+1))KingTrier.Emplace(XBoardCoord+1, YBoardCoord+1);
+		if(IsOnBoard(XBoardCoord+1, YBoardCoord-1))KingTrier.Emplace(XBoardCoord+1, YBoardCoord-1);
 	}
 	return KingTrier;
 }

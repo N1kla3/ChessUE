@@ -16,4 +16,5 @@ class CHESSUE_API AMyPlayerController : public APlayerController
 
 public:			
 	AMyPlayerController();
+	virtual void BeginPlay() override;
 };

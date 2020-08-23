@@ -14,11 +14,17 @@ class CHESSUE_API AGamePawn : public APawn
 public:
 
 	AGamePawn();
-
+	UFUNCTION(BlueprintCallable)
+	void ChangeIndexCreator(const int Num)
+	{
+		FigureCreatorIndex = Num;
+	}
 
 protected:
 	virtual void BeginPlay() override;
 
+	int FigureCreatorIndex;
+	
 	UPROPERTY()
 	bool bIsCLicked;
 	

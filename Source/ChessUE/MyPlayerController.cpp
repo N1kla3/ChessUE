@@ -10,3 +10,9 @@ AMyPlayerController::AMyPlayerController()
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::GrabHand;
 }
+
+void AMyPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+	SetInputMode(FInputModeGameAndUI());
+}

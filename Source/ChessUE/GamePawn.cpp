@@ -9,6 +9,7 @@
 #include "EngineUtils.h"
 #include "King.h"
 #include "Rook.h"
+#include "UObject/ConstructorHelpers.h"
 #include "GameFramework/PlayerController.h"
 
 
@@ -26,6 +27,9 @@ AGamePawn::AGamePawn()
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
 	CurPlayerSide = White;
+
+	static ConstructorHelpers::FClassFinder<UUserWidget> WidgetConstruct(TEXT("/Game/PieceChoser"));
+	Widget = WidgetConstruct.Class;
 }
 
 
@@ -212,6 +216,8 @@ void AGamePawn::HandleChessPawn(const FBoardLocation ToMove)
 	{
 		if(IfPawn->IsPromotionTime(ToMove))
 		{
+			ChooserWidget = CreateWidget<UPieceChooserWidget>(GetWorld(), Widget);
+			ChooserWidget->AddToViewport();
 			CurrentChessPieceFocus = Board->CreateFigureFromPawn(IfPawn->GetBoardLocation());
 		}
 	}

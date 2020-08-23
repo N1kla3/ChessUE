@@ -5,6 +5,7 @@
 #include "Camera/CameraComponent.h"
 #include "ChessBoard.h"
 #include "GameFramework/Pawn.h"
+#include "PieceChooserWidget.h"
 #include "GamePawn.generated.h"
 
 UCLASS()
@@ -49,6 +50,11 @@ protected:
 	TEnumAsByte<FigureColor> CurPlayerSide;
 	
 	TArray<FBoardLocation> CurrFigureMoves;
+
+	TSubclassOf<UUserWidget> Widget;
+
+	UPROPERTY(BlueprintReadWrite)
+	UPieceChooserWidget* ChooserWidget;
 	
 public:
 	// Called every frame

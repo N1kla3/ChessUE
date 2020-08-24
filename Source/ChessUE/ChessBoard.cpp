@@ -211,13 +211,24 @@ void AChessBoard::HighlightCells()
     }
 }
 
-AChessPiece* AChessBoard::CreateFigureFromPawn(const FBoardLocation Location)
+AChessPiece* AChessBoard::CreateFigureFromPawn(const FBoardLocation Location, int Switcher)
 {
     ABoardCell* BeforePromotionCell = FindCell(Location);
     auto Color = BeforePromotionCell->GetPiece()->GetColor();
     BeforePromotionCell->DestroyPiece();
     //define gui to choose figure kind to spawn HERe
-    BeforePromotionCell->SetPiece(GetWorld()->SpawnActor<AKnight>(), Color);
+    switch (Switcher)
+    {
+        case 1:
+            {
+                BeforePromotionCell->SetPiece(GetWorld()->SpawnActor<ARook>(), Color);
+            }
+        default:
+            {
+                BeforePromotionCell->SetPiece(GetWorld()->SpawnActor<AKnight>(), Color);
+            }
+    }
+    
     GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Knight"));
     return BeforePromotionCell->GetPiece();
 }

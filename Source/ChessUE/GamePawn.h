@@ -20,6 +20,8 @@ public:
 	{
 		FigureCreatorIndex = Num;
 	}
+	UFUNCTION(BlueprintCallable)
+	void CreatePieceInGUI();
 
 protected:
 	virtual void BeginPlay() override;
@@ -83,6 +85,8 @@ private:
 	void IncreaseMoveIfRook();
 	void IncreaseMoveIfKing();
 	void MakeCastlingIfNeeded(const FBoardLocation ToMoveLocation);
+
+	bool IsTimeToPromotePawn(const FBoardLocation ToMove);
 	
 	void SwapPlayers();
 };

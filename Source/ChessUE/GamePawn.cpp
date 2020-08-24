@@ -33,6 +33,13 @@ AGamePawn::AGamePawn()
 }
 
 
+void AGamePawn::CreatePieceInGUI()
+{
+	CurrentChessPieceFocus = Board->CreateFigureFromPawn(CurrentChessPieceFocus->GetBoardLocation(), FigureCreatorIndex);
+	MoveFigureToCeil();
+	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameAndUI());
+}
+
 void AGamePawn::BeginPlay()
 {
 	Super::BeginPlay();
@@ -165,7 +172,8 @@ void AGamePawn::HandleChessPiece()
 			IncreaseMoveIfKing();
 			IncreaseMoveIfRook();
 			MakeCastlingIfNeeded(CurrentCellFocus->GetBoardLocation());
-			MoveFigureToCeil();
+			if(!IsTimeToPromotePawn(CurrentCellFocus->GetBoardLocation()))
+				MoveFigureToCeil();
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Moved"));
 		}else
 		{
@@ -212,15 +220,7 @@ void AGamePawn::HandleChessPawn(const FBoardLocation ToMove)
 	{
 		Board->EmptyEnPass(CurrentChessPieceFocus->GetColor());
 	}
-	if(IfPawn)
-	{
-		if(IfPawn->IsPromotionTime(ToMove))
-		{
-			ChooserWidget = CreateWidget<UPieceChooserWidget>(GetWorld(), Widget);
-			ChooserWidget->AddToViewport();
-			CurrentChessPieceFocus = Board->CreateFigureFromPawn(IfPawn->GetBoardLocation());
-		}
-	}
+	
 }
 
 void AGamePawn::IncreaseMoveIfRook()
@@ -251,6 +251,22 @@ void AGamePawn::MakeCastlingIfNeeded(const FBoardLocation ToMoveLocation)
 			Board->DoShortCastling(Loc);
 		}
 	}
+}
+
+bool AGamePawn::IsTimeToPromotePawn(const FBoardLocation ToMove)
+{
+	auto IfPawn = Cast<AChessPawn>(CurrentChessPieceFocus);
+	if(IfPawn)
+	{
+		if(IfPawn->IsPromotionTime(ToMove))
+		{
+			ChooserWidget = CreateWidget<UPieceChooserWidget>(GetWorld(), Widget);
+			ChooserWidget->AddToViewport();
+			GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeUIOnly());
+			return true;
+		}
+	}
+	return false;
 }
 
 void AGamePawn::SwapPlayers()

@@ -65,7 +65,7 @@ public:
 	 */
 	void SetChosenPiece(AChessPiece* Piece);
 	void HighlightCells();
-	AChessPiece* CreateFigureFromPawn(const FBoardLocation Location);
+	AChessPiece* CreateFigureFromPawn(const FBoardLocation Location, int Swithcher);
 	void EmptyEnPass(FigureColor Color);
 	void SetEnPass(FBoardLocation Location, FigureColor Color);
 	FBoardLocation GetEnPass(FigureColor Color)const;

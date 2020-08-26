@@ -6,7 +6,7 @@
 AChessPawn::AChessPawn()
 	: AChessPiece()
 {
-	const TCHAR* pathToModel = TEXT("/Game/Shape_Cone.Shape_Cone");
+	const TCHAR* pathToModel = TEXT("/Game/chessPieces_Chess_Pawn_White.chessPieces_Chess_Pawn_White");
 	Init(pathToModel);
 	bIsDoubleMove = false;
 	CurrentMoveNumber = 0;

@@ -23,6 +23,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void CreatePieceInGUI();
 
+	UFUNCTION(BlueprintCallable)
+	void RemoveWidget();
+
 protected:
 	virtual void BeginPlay() override;
 

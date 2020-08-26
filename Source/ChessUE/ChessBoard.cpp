@@ -216,12 +216,12 @@ AChessPiece* AChessBoard::CreateFigureFromPawn(const FBoardLocation Location, in
     ABoardCell* BeforePromotionCell = FindCell(Location);
     auto Color = BeforePromotionCell->GetPiece()->GetColor();
     BeforePromotionCell->DestroyPiece();
-    //define gui to choose figure kind to spawn HERe
     switch (Switcher)
     {
         case 1:
             {
                 BeforePromotionCell->SetPiece(GetWorld()->SpawnActor<ARook>(), Color);
+                break;
             }
         default:
             {

@@ -40,6 +40,15 @@ void AGamePawn::CreatePieceInGUI()
 	GetWorld()->GetFirstPlayerController()->SetInputMode(FInputModeGameAndUI());
 }
 
+void AGamePawn::RemoveWidget()
+{
+	if(ChooserWidget != nullptr)
+	{
+		ChooserWidget->RemoveFromViewport();
+		ChooserWidget = nullptr;
+	}
+}
+
 void AGamePawn::BeginPlay()
 {
 	Super::BeginPlay();
